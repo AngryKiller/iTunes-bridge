@@ -29,8 +29,16 @@ var exports = module.exports = {};
      var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
      var remainingTime = durationInSeconds - elapsedTimeInSeconds;
      return secToMin(remainingTime);
-
  };
+exports.getCurrentTrackElapsedSeconds = function() {
+    var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
+    return elapsedTimeInSeconds;
+};
+ exports.getCurrentTrackRemainingSeconds = function() {
+     var durationInSeconds = applescript.sync('tell application "iTunes" to get the duration of the current track');
+     var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
+     return durationInSeconds - elapsedTimeInSeconds;
+};
  exports.getCurrentTrackReleaseYear = function() {
      return applescript.sync('tell application "iTunes" to get the year of the current track');
  };
