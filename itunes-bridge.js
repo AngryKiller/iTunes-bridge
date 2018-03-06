@@ -1,4 +1,4 @@
-// iTunes Bridge 0.1-alpha by AngryKiller.
+// iTunes Bridge 0.1.8-alpha by AngryKiller.
 // GPL-3.0
 
 
@@ -8,51 +8,103 @@ var exports = module.exports = {};
 
 
  exports.getCurrentTrackName = function() {
-     return applescript.sync('tell application "iTunes" to get the name of the current track');
+     try {
+         return applescript.sync('tell application "iTunes" to get the name of the current track');
+     }catch(err){
+         return null;
+     }
  };
  exports.getCurrentTrackArtist = function() {
-     return applescript.sync('tell application "iTunes" to get the artist of the current track');
+     try {
+         return applescript.sync('tell application "iTunes" to get the artist of the current track');
+     }catch(err){
+         return null;
+     }
  };
  exports.getCurrentTrackAlbum = function() {
-     return applescript.sync('tell application "iTunes" to get the album of the current track');
+     try {
+         return applescript.sync('tell application "iTunes" to get the album of the current track');
+     }catch(err){
+         return null;
+     }
  };
  exports.getCurrentTrackDuration = function() {
-     var durationInSeconds = applescript.sync('tell application "iTunes" to get the duration of the current track');
-     return secToMin(durationInSeconds);
+     try {
+         var durationInSeconds = applescript.sync('tell application "iTunes" to get the duration of the current track');
+         return secToMin(durationInSeconds);
+     }catch(err){
+         return null;
+     }
  };
  exports.getCurrentTrackElapsedTime = function() {
-     var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
-     return secToMin(elapsedTimeInSeconds);
+     try {
+         var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
+         return secToMin(elapsedTimeInSeconds);
+     }catch(err){
+         return null;
+     }
  };
  exports.getCurrentTrackRemainingTime = function() {
-     var durationInSeconds = applescript.sync('tell application "iTunes" to get the duration of the current track');
-     var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
-     var remainingTime = durationInSeconds - elapsedTimeInSeconds;
-     return secToMin(remainingTime);
+     try {
+         var durationInSeconds = applescript.sync('tell application "iTunes" to get the duration of the current track');
+         var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
+         var remainingTime = durationInSeconds - elapsedTimeInSeconds;
+         return secToMin(remainingTime);
+     }catch(err){
+         return null;
+     }
  };
 exports.getCurrentTrackElapsedSeconds = function() {
-    var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
-    return elapsedTimeInSeconds;
+    try {
+        var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
+        return elapsedTimeInSeconds;
+    }catch(err){
+        return null;
+    }
 };
  exports.getCurrentTrackRemainingSeconds = function() {
-     var durationInSeconds = applescript.sync('tell application "iTunes" to get the duration of the current track');
-     var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
-     return durationInSeconds - elapsedTimeInSeconds;
+     try {
+         var durationInSeconds = applescript.sync('tell application "iTunes" to get the duration of the current track');
+         var elapsedTimeInSeconds = applescript.sync('tell application "iTunes" to get the player position');
+         return durationInSeconds - elapsedTimeInSeconds;
+     }catch(err){
+         return null;
+     }
 };
  exports.getCurrentTrackReleaseYear = function() {
-     return applescript.sync('tell application "iTunes" to get the year of the current track');
+     try {
+         return applescript.sync('tell application "iTunes" to get the year of the current track');
+     }catch(err){
+         return null;
+     }
  };
  exports.getCurrentTrackGenre = function() {
-     return applescript.sync('tell application "iTunes" to get the genre of the current track');
+     try {
+         return applescript.sync('tell application "iTunes" to get the genre of the current track');
+     }catch(err){
+         return null;
+     }
 };
  exports.getPlayerState = function() {
      // TODO: Check if iTunes is launched as another check before the AppleScript one
-     return applescript.sync('tell application "iTunes" to get the player state');
+     try {
+         return applescript.sync('tell application "iTunes" to get the player state');
+     }catch(err){
+         return null;
+     }
  };
  exports.getPlaylistCount = function() {
-     return applescript.sync('tell application "iTunes" to get the count of playlists');
+     try {
+         return applescript.sync('tell application "iTunes" to get the count of playlists');
+     }catch(err){
+         return null;
+     }
  };
 // TODO: Supports for arguments in the track count (album, artist, playlist...)
  exports.getTrackCount = function() {
-     return applescript.sync('tell application "iTunes" to get the count of tracks');
+     try {
+         return applescript.sync('tell application "iTunes" to get the count of tracks');
+     }catch(err){
+         return null;
+     }
  };
