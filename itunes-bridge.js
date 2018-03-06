@@ -12,27 +12,28 @@ var exports = module.exports = {};
  };
  exports.getCurrentTrackArtist = function() {
      return applescript.sync('tell application "iTunes" to get the artist of the current track');
- }
+ };
  exports.getCurrentTrackAlbum = function() {
      return applescript.sync('tell application "iTunes" to get the album of the current track');
- }
+ };
  exports.getCurrentTrackDuration = function() {
      var durationInSeconds = applescript.sync('tell application "iTunes" to get the duration of the current track');
      return secToMin(durationInSeconds);
- }
+ };
  exports.getCurrentTrackReleaseYear = function() {
      return applescript.sync('tell application "iTunes" to get the year of the current track');
- }
+ };
  exports.getCurrentTrackGenre = function() {
      return applescript.sync('tell application "iTunes" to get the genre of the current track');
-}
+};
  exports.getPlayerState = function() {
      // TODO: Check if iTunes is launched as another check before the AppleScript one
      return applescript.sync('tell application "iTunes" to get the player state');
- }
+ };
  exports.getPlaylistCount = function() {
      return applescript.sync('tell application "iTunes" to get the count of playlists');
- }
+ };
+// TODO: Supports for arguments in the track count (album, artist, playlist...)
  exports.getTrackCount = function() {
      return applescript.sync('tell application "iTunes" to get the count of tracks');
- }
+ };
