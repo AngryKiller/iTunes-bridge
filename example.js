@@ -12,8 +12,8 @@ if(currentPlayerState == 'playing') {
 
     var exampleMsg = 'iTunes is currently paused';
     console.log(exampleMsg)
-}else{ // If iTunes is not playing or paused, we assume that he is stopped
+}else if (currentPlayerState == "not running"){
 
-    var exampleMsg = "iTunes is not playing at the moment.";
+    var exampleMsg = "iTunes is not running at the moment.";
     console.log(exampleMsg);
 }

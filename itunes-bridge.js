@@ -4,6 +4,7 @@
 
 var applescript = require('run-applescript');
 var secToMin = require('sec-to-min'); // This is required for the duration of the track as iTunes returns the duration in seconds.
+var { execSync } = require('child_process');
 var exports = module.exports = {};
 
 
@@ -86,11 +87,10 @@ exports.getCurrentTrackElapsedSeconds = function() {
      }
 };
  exports.getPlayerState = function() {
-     // TODO: Check if iTunes is launched as another check before the AppleScript one
-     try {
+     if(isAppRunning("iTunes")) {
          return applescript.sync('tell application "iTunes" to get the player state');
-     }catch(err){
-         return null;
+     }else{
+         return "not running";
      }
  };
  exports.getPlaylistCount = function() {
@@ -108,3 +108,17 @@ exports.getCurrentTrackElapsedSeconds = function() {
          return null;
      }
  };
+
+
+
+
+
+ function isAppRunning(app){
+     try {
+         execSync('pgrep -x "'+app+'"');
+         return true;
+     }
+     catch (err) {
+         return false;
+     }
+ }
