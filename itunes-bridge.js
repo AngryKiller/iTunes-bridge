@@ -9,14 +9,21 @@ var path = require('path');
 var scptsPath = path.join(__dirname, "./applescript/");
 
 exports.getCurrentTrack = function() {
-    var scpt = scptsPath+'getCurrentTrack.applescript';
-    try{
-        return JSON.parse(applescript.noExecSync(scpt));
-    }catch(err){
-        return null;
+    var scpt = scptsPath + 'getCurrentTrack.applescript';
+    if (isAppRunning("iTunes")) {
+        try {
+            return JSON.parse(applescript.noExecSync(scpt));
+        } catch (err) {
+            var playerState = {"playerState": "stopped"};
+            return playerState;
+        }
+    }
+    else{
+            var playerState = {"playerState": "not running"};
+            return playerState;
+        }
     }
 
-};
 
  exports.getPlayerState = function() {
      if(isAppRunning("iTunes")) {
