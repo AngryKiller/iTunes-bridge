@@ -102,7 +102,7 @@ end createDict
 
 tell application "iTunes"
 	set currentTrack to current track
-	set playerState to the (player state as string)
+	set playerState to the player state as string
 	tell currentTrack
 		set vname to name
 		set vartist to album artist

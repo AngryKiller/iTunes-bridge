@@ -1,11 +1,14 @@
 {
   "name": "itunes-bridge",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A NodeJS package to control and get informations from iTunes through AppleScript",
   "main": "itunes-bridge.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AngryKiller/iTunes-bridge.git"
+  },
+  "scripts": {
+    "example": "node example.js"
   },
   "keywords": [
     "itunes",

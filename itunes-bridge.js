@@ -9,7 +9,7 @@ var path = require('path');
 var scptsPath = path.join(__dirname, "./applescript/");
 
 exports.getCurrentTrack = function() {
-    var scpt = scptsPath+'getCurrentTrack.scpt';
+    var scpt = scptsPath+'getCurrentTrack.applescript';
     try{
         return JSON.parse(applescript.noExecSync(scpt));
     }catch(err){
