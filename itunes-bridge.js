@@ -9,11 +9,7 @@ var path = require('path');
 var fs = require('fs');
 var scptsPath = path.join(__dirname, "./applescript/");
 var plist = require('plist');
-//let getItunesPath = require('@johnpaulvaughan/itunes-music-library-path').getItunesPath;
-//console.log(getItunesPath().then(result));
 
-//var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
-//console.log(libPath);
 
 exports.getCurrentTrack = function() {
     var scpt = scptsPath + 'getCurrentTrack.applescript';
@@ -38,7 +34,20 @@ exports.getTrack = function(id, libPath) {
         return "not_found";
     }
 };
-
+exports.play = function(trackName){
+    try {
+        if (trackName !== undefined) {
+            applescript.sync('tell application "iTunes" to play track "' + trackName + '"');
+        } else {
+            applescript.sync('tell application "iTunes" to play');
+        }
+    }catch(err){console.log(err)}
+};
+exports.pause = function(){
+    try {
+        applescript.sync('tell application "iTunes" to pause');
+    }catch(err){console.log(err)}
+};
 exports.getPlayerState = function() {
      if(isAppRunning("iTunes")) {
          return applescript.sync('tell application "iTunes" to get the player state');
