@@ -55,17 +55,19 @@ exports.getPlayerState = function() {
          return "not running";
      }
  };
-exports.getPlaylistCount = function() {
+exports.getPlaylistCount = function(libPath) {
      try {
-         return applescript.sync('tell application "iTunes" to get the count of playlists');
+         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
+         return Object.keys(obj.Playlists).length;
      }catch(err){
          return null;
      }
  };
 // TODO: Support for arguments in the track count (album, artist, playlist...)
-exports.getTrackCount = function() {
+exports.getTrackCount = function(libPath) {
      try {
-         return applescript.sync('tell application "iTunes" to get the count of tracks');
+         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
+         return Object.keys(obj.Tracks).length;
      }catch(err){
          return null;
      }
