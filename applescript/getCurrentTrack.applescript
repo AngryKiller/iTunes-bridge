@@ -37,7 +37,7 @@ on encodeString(value)
 			set quoted_ch to "\\\""
 		else if codepoint = 92 then
 			set quoted_ch to "\\\\"
-		else if codepoint ³ 32 and codepoint < 127 then
+		else if codepoint Â³ 32 and codepoint < 127 then
 			set quoted_ch to character id codepoint
 		else
 			set quoted_ch to "\\u" & hex4(codepoint)
@@ -111,9 +111,10 @@ tell application "iTunes"
 		set vgenre to genre
 		set vreleaseyear to year
 		set vid to id
+		set vmediakind to media kind   
 	end tell
 	set velapsed to the (player position as integer)
 	set vremaining to (vtime - velapsed)
 end tell
-set my_dict to createDictWith({{"name", vname}, {"artist", vartist}, {"album", valbum}, {"duration", vtime}, {"elapsedTime", velapsed}, {"remainingTime", vremaining}, {"genre", vgenre}, {"release_year", vreleaseyear}, {"id", vid}, {"playerState", playerState}})
+set my_dict to createDictWith({{"name", vname}, {"artist", vartist}, {"album", valbum},{"mediaKind", vmediakind}, {"duration", vtime}, {"elapsedTime", velapsed}, {"remainingTime", vremaining}, {"genre", vgenre}, {"release_year", vreleaseyear}, {"id", vid}, {"playerState", playerState}})
 return encode(my_dict)
