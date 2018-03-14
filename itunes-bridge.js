@@ -23,6 +23,9 @@ exports.getCurrentTrack = function(){
         return {playerState: "stopped"};
     }
 };
+exports.play = function(song){
+
+}
 exports.getPlaylistCount = function(libPath) {
      try {
          var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
@@ -57,7 +60,7 @@ setInterval(function(){
     }else{
         that.currentTrack = currentTrack;
     }
-}, 200);
+}, 1000);
 
 exports.emitter = event;
 

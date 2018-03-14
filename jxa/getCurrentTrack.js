@@ -1,5 +1,7 @@
 var iTunes = Application('iTunes');
-    var currentTrack = iTunes.currentTrack;
+
+
+var currentTrack = iTunes.currentTrack;
     try {
         var remainingTime = parseInt(currentTrack.duration() - iTunes.playerPosition());
         var json = {
@@ -16,6 +18,7 @@ var iTunes = Application('iTunes');
             "playerState": iTunes.playerState()
         };
         return json;
-    }catch(e){
+    } catch (e) {
         return {"playerState": "stopped"};
     }
+}
