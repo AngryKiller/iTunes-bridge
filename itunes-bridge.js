@@ -62,15 +62,15 @@ if(os.platform() === "darwin") {
         var currentTrack = exports.getCurrentTrack();
         if (currentTrack && that.currentTrack) {
             // On track change
-            if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === that.currentTrack.playerState && currentTrack.playerState === "playing") {
+            if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "playing") {
                 that.currentTrack = currentTrack;
                 event.emit('playing', 'new_track',  currentTrack);
-            } else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === that.currentTrack.playerState && currentTrack.playerState === "paused") {
+            } else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "paused") {
                 that.currentTrack = currentTrack;
                 event.emit('paused', 'new_track', currentTrack);
             }
             // On player state change
-            if (currentTrack.playerState !== that.currentTrack.playerState) {
+            if (currentTrack.playerState !== that.currentTrack.playerState && currentTrack.id === that.currentTrack.id) {
                 that.currentTrack.playerState = currentTrack.playerState;
                 event.emit(currentTrack.playerState, 'player_state_change', currentTrack);
             }
