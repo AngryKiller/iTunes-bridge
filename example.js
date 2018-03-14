@@ -1,3 +1,6 @@
+// iTunes Bridge 0.3.0-alpha by AngryKiller.
+// GPL-3.0
+
 const iTunes = require('./itunes-bridge');
 var currentTrack = iTunes.getCurrentTrack();
 

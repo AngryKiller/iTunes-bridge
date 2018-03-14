@@ -1,4 +1,4 @@
-// iTunes Bridge 0.2.2-alpha by AngryKiller.
+// iTunes Bridge 0.3.0-alpha by AngryKiller.
 // GPL-3.0
 
 // TODO: get library infos from the iTunes xml
