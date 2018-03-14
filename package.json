@@ -25,8 +25,8 @@
   },
   "homepage": "https://github.com/AngryKiller/iTunes-bridge#readme",
   "dependencies": {
-    "@angrykiller/run-applescript": "^3.2.0",
     "@johnpaulvaughan/itunes-music-library-path": "^2.0.2",
-    "plist": "^2.1.0"
+    "plist": "^2.1.0",
+    "run-jxa": "^1.2.0"
   }
 }

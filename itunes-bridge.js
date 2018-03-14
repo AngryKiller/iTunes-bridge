@@ -1,60 +1,28 @@
 // iTunes Bridge 0.3.0-alpha by AngryKiller.
 // GPL-3.0
 
-// TODO: get library infos from the iTunes xml
-var applescript = require('@angrykiller/run-applescript');
-var { execSync } = require('child_process');
+
 var exports = module.exports = {};
-var path = require('path');
 var fs = require('fs');
-var scptsPath = path.join(__dirname, "./applescript/");
+var { execSync } = require('child_process');
+var events = require('events');
+var event = new events.EventEmitter();
 var plist = require('plist');
+var runJxa = require('run-jxa');
 
+var that = this;
 
-exports.getCurrentTrack = function() {
-    var scpt = scptsPath + 'getCurrentTrack.applescript';
-    if (isAppRunning("iTunes")) {
+exports.getCurrentTrack = function(){
+    if(isAppRunning('iTunes')){
         try {
-            return JSON.parse(applescript.noExecSync(scpt));
-        } catch (err) {
-            var playerState = {"playerState": "stopped"};
-            return playerState;
+            return runJxa.sync(fs.readFileSync('./jxa/getCurrentTrack.js'));
+        } catch (e) {
+            console.log(e);
         }
-    }
-    else{
-            var playerState = {"playerState": "not running"};
-            return playerState;
-        }
-    };
-exports.getTrack = function(id, libPath) {
-    try {
-        var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
-        return obj.Tracks[id];
-    }catch(err){
-        return "not_found";
+    }else{
+        return {playerState: "stopped"};
     }
 };
-exports.play = function(trackName){
-    try {
-        if (trackName !== undefined) {
-            applescript.sync('tell application "iTunes" to play track "' + trackName + '"');
-        } else {
-            applescript.sync('tell application "iTunes" to play');
-        }
-    }catch(err){console.log(err)}
-};
-exports.pause = function(){
-    try {
-        applescript.sync('tell application "iTunes" to pause');
-    }catch(err){console.log(err)}
-};
-exports.getPlayerState = function() {
-     if(isAppRunning("iTunes")) {
-         return applescript.sync('tell application "iTunes" to get the player state');
-     }else{
-         return "not running";
-     }
- };
 exports.getPlaylistCount = function(libPath) {
      try {
          var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
@@ -72,6 +40,27 @@ exports.getTrackCount = function(libPath) {
          return null;
      }
  };
+
+
+that.currentTrack = null;
+setInterval(function(){
+    var currentTrack = exports.getCurrentTrack();
+    if(currentTrack && that.currentTrack){
+        // On track change
+        if(currentTrack.id !== that.currentTrack.id && currentTrack.playerState === that.currentTrack.playerState && currentTrack.playerState === "playing"){
+            that.currentTrack = currentTrack;
+            event.emit('playing', currentTrack);
+        }else if(currentTrack.id !== that.currentTrack.id && currentTrack.playerState === that.currentTrack.playerState && currentTrack.playerState === "paused"){
+            that.currentTrack = currentTrack;
+            event.emit('paused', currentTrack);
+        }
+    }else{
+        that.currentTrack = currentTrack;
+    }
+}, 200);
+
+exports.emitter = event;
+
 
  function isAppRunning(app){
      try {
