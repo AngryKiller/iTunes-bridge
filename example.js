@@ -25,6 +25,13 @@ switch(currentTrack.playerState){
         break;
     }
 };
+
+// Do something when iTunes is playing
 iTunesEmitter.on('playing', function(message){
-    console.log(message.name+" new track");
+    console.log(message.name+" is now playing!");
+});
+
+// Do something when iTunes is paused
+iTunesEmitter.on('paused', function(message){
+    console.log(message.name+" is now paused!");
 });

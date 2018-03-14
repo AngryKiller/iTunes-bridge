@@ -7,8 +7,11 @@ No documentation yet, but you can look at the code of [iTunes-Discord integratio
 There is also an example.js that you can run.
 
 ```js
-const iTunes = require('./itunes-bridge');
+
+var iTunes = require('./itunes-bridge');
 var currentTrack = iTunes.getCurrentTrack();
+// We load the iTunes-bridge emitter to receive events
+var iTunesEmitter = iTunes.emitter;
 
 switch(currentTrack.playerState){
     case "playing": {
@@ -23,12 +26,22 @@ switch(currentTrack.playerState){
         console.log(exampleMsg);
         break;
     }
-    case "stopped":
-    case "not running": {
+    case "stopped": {
         var exampleMsg = "iTunes is not playing at the moment.";
         console.log(exampleMsg);
         break;
     }
 };
+
+// Do something when iTunes is playing
+iTunesEmitter.on('playing', function(message){
+    console.log(message.name+" is now playing!");
+});
+
+// Do something when iTunes is paused
+iTunesEmitter.on('paused', function(message){
+    console.log(message.name+" is now paused!");
+});
+
 ```
     

@@ -21,4 +21,3 @@ var currentTrack = iTunes.currentTrack;
     } catch (e) {
         return {"playerState": "stopped"};
     }
-}
