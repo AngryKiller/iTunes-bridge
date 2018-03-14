@@ -27,11 +27,17 @@ switch(currentTrack.playerState){
 };
 
 // Do something when iTunes is playing
-iTunesEmitter.on('playing', function(message){
-    console.log(message.name+" is now playing!");
+iTunesEmitter.on('playing', function(type, currentTrack){
+    // If it is a paused track that restarts playing
+    if(type === "player_state_change") {
+        console.log(currentTrack.name + " has been resumed! ");
+        // Or if it is a new track
+    }else if(type === 'new_track'){
+        console.log(currentTrack.name+" is now playing!")
+    }
 });
 
 // Do something when iTunes is paused
-iTunesEmitter.on('paused', function(message){
-    console.log(message.name+" is now paused!");
+iTunesEmitter.on('paused', function(type, currentTrack){
+    console.log(currentTrack.name+" is now paused!");
 });
