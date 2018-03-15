@@ -11,22 +11,28 @@ var JSON;JSON||(JSON={});
 var iTunesApp = WScript.CreateObject("iTunes.Application");
 
 function getCurrentTrack(){
+    var json = {};
+    try {
         var currentTrack = iTunesApp.currentTrack;
-    var remainingTime = parseInt(currentTrack.duration - iTunesApp.PlayerPosition);
-    var json = {
-        "name": currentTrack.name,
-        "artist": currentTrack.artist,
-        "album": currentTrack.album,
-        "mediaKind": currentTrack.kind,
-        "duration": currentTrack.duration,
-        "elapsedTime": iTunesApp.PlayerPosition,
-        "remainingTime": remainingTime,
-        "genre": currentTrack.genre,
-        "releaseYear": currentTrack.year,
-        "id": currentTrack.id,
-        "playerState": iTunesApp.PlayerState
-    };
-    return JSON.stringify(json);
+        var remainingTime = parseInt(currentTrack.duration - iTunesApp.PlayerPosition);
 
+        json = {
+            "name": currentTrack.name,
+            "artist": currentTrack.artist,
+            "album": currentTrack.album,
+            "mediaKind": currentTrack.kind,
+            "duration": currentTrack.duration,
+            "elapsedTime": iTunesApp.PlayerPosition,
+            "remainingTime": remainingTime,
+            "genre": currentTrack.genre,
+            "releaseYear": currentTrack.year,
+            "id": currentTrack.id,
+            "playerState": iTunesApp.PlayerState
+        };
+    } catch (e) {
+        json = {"playerState": "stopped"};
+    }
+    return JSON.stringify(json);
 }
+WScript.Echo(getCurrentTrack());
 
