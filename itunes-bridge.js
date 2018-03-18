@@ -66,6 +66,9 @@ setInterval(function () {
         } else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "paused") {
             that.currentTrack = currentTrack;
             event.emit('paused', 'new_track', currentTrack);
+        }else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "stopped") {
+            that.currentTrack = {"playerState": "stopped"};
+            event.emit('stopped');
         }
         // On player state change
         if (currentTrack.playerState !== that.currentTrack.playerState && currentTrack.id === that.currentTrack.id) {

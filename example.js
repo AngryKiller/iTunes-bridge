@@ -41,3 +41,6 @@ iTunesEmitter.on('playing', function(type, currentTrack){
 iTunesEmitter.on('paused', function(type, currentTrack){
     console.log(currentTrack.name+" is now paused!");
 });
+iTunesEmitter.on('stopped', function(){
+    console.log("iTunes is not longer playing!");
+});
