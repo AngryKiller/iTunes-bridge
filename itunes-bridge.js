@@ -8,14 +8,13 @@ var {execSync} = require('child_process');
 var events = require('events');
 var event = new events.EventEmitter();
 var plist = require('plist');
-var runJxa = require('run-jxa');
 
 var that = this;
 
 exports.getCurrentTrack = function () {
     if (isAppRunning('iTunes')) {
         try {
-            return runScript('getCurrentTrack');
+            return runScript('getCurrentTrack', 'fetch');
         } catch (e) {
             console.log(e);
         }
@@ -24,10 +23,10 @@ exports.getCurrentTrack = function () {
     }
 };
 exports.play = function (song) {
-    runScript('play');
+    runScript('play', 'control');
 };
 exports.pause = function (){
-    runScript('pause');
+    runScript('pause', 'control');
 };
 exports.getTrack = function(id, libPath) {
     try {
@@ -100,9 +99,22 @@ function isAppRunning(app) {
     }
 }
 
-function runScript(scriptName) {
+function runScript(req, type) {
     if (process.platform === "darwin") {
-        return runJxa.sync(fs.readFileSync('./jxa/' + scriptName + '.js'));
+        switch(type){
+            case "fetch": {
+                return JSON.parse(execSync('osascript ./jxa/iTunesFetcher.js ' + req));
+                break;
+            }
+            case "control": {
+                try {
+                    execSync('osascript ./jxa/iTunesControl.js ' + req);
+                }catch(e){
+                    console.error(e);
+                }
+                break;
+            }
+        }
     } else if (process.platform === "win32") {
         try {
             return JSON.parse(execSync('cscript //Nologo  ./wscript/' + scriptName + '.js'));

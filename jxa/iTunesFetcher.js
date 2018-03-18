@@ -1,10 +1,13 @@
-var iTunes = Application('iTunes');
+const iTunes = Application('iTunes');
 
+ObjC.import('Foundation');
+const argv = $.NSProcessInfo.processInfo.arguments.js;
 
-var currentTrack = iTunes.currentTrack;
+function getCurrentTrack() {
+    const currentTrack = iTunes.currentTrack;
     try {
-        var remainingTime = parseInt(currentTrack.duration() - iTunes.playerPosition());
-        var json = {
+        const remainingTime = parseInt(currentTrack.duration() - iTunes.playerPosition());
+        const json = {
             "name": currentTrack.name(),
             "artist": currentTrack.artist(),
             "album": currentTrack.album(),
@@ -21,3 +24,13 @@ var currentTrack = iTunes.currentTrack;
     } catch (e) {
         return {"playerState": "stopped"};
     }
+}
+
+function run(argv) {
+    switch(argv[0]){
+        case "getCurrentTrack":{
+         return JSON.stringify(getCurrentTrack());
+         break;
+        }
+    }
+}
