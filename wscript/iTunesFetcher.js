@@ -15,7 +15,20 @@ function getCurrentTrack(){
     try {
         var currentTrack = iTunesApp.currentTrack;
         var remainingTime = parseInt(currentTrack.duration - iTunesApp.PlayerPosition);
-
+        switch(iTunesApp.PlayerState){
+            case 1:{
+                var playerState = "playing";
+                break;
+            }
+            case 0:{
+                if(currentTrack.name !== undefined) {
+                    var playerState = "paused";
+                }else{
+                    var playerState = "stopped";
+                }
+                break;
+            }
+        }
         json = {
             "name": currentTrack.name,
             "artist": currentTrack.artist,
@@ -27,12 +40,19 @@ function getCurrentTrack(){
             "genre": currentTrack.genre,
             "releaseYear": currentTrack.year,
             "id": currentTrack.id,
-            "playerState": iTunesApp.PlayerState
+            "playerState": playerState
         };
     } catch (e) {
         json = {"playerState": "stopped"};
     }
     return JSON.stringify(json);
 }
-WScript.Echo(getCurrentTrack());
+
+switch(WScript.arguments(0)){
+    case "getCurrentTrack":{
+        WScript.Echo(getCurrentTrack());
+        break;
+    }
+}
+
 

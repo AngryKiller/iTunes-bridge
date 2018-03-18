@@ -116,10 +116,19 @@ function runScript(req, type) {
             }
         }
     } else if (process.platform === "win32") {
-        try {
-            return JSON.parse(execSync('cscript //Nologo  ./wscript/' + scriptName + '.js'));
-        }catch(e){
-            return execSync('cscript //Nologo  ./wscript/' + scriptName + '.js');
+        switch(type){
+            case "fetch": {
+                return JSON.parse(execSync('cscript //Nologo ./wscript/iTunesFetcher.js ' + req));
+                break;
+            }
+            case "control": {
+                try {
+                    execSync('cscript //Nologo ./wscript/iTunesControl.js ' + req);
+                }catch(e){
+                    console.error(e);
+                }
+                break;
+            }
         }
     }
 
