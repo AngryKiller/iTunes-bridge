@@ -39,7 +39,7 @@ function getCurrentTrack(){
             "remainingTime": remainingTime,
             "genre": currentTrack.genre,
             "releaseYear": currentTrack.year,
-            "id": currentTrack.id,
+            "id": currentTrack.name, // I haven't found a way to get the current track ID with iTunes COM :/
             "playerState": playerState
         };
     } catch (e) {
