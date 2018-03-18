@@ -1,4 +1,4 @@
-// iTunes Bridge 0.3.0-alpha by AngryKiller.
+// iTunes Bridge 0.4.1-alpha by AngryKiller.
 // GPL-3.0
 
 var os = require('os');
@@ -106,12 +106,12 @@ function runScript(req, type) {
     if (process.platform === "darwin") {
         switch(type){
             case "fetch": {
-                return JSON.parse(execSync('osascript ./jxa/iTunesFetcher.js ' + req));
+                return JSON.parse(execSync('osascript '+__dirname+'/jxa/iTunesFetcher.js ' + req));
                 break;
             }
             case "control": {
                 try {
-                    execSync('osascript ./jxa/iTunesControl.js ' + req);
+                    execSync('osascript '+__dirname+'/jxa/iTunesControl.js ' + req);
                 }catch(e){
                     console.error(e);
                 }
@@ -121,12 +121,12 @@ function runScript(req, type) {
     } else if (process.platform === "win32") {
         switch(type){
             case "fetch": {
-                return JSON.parse(execSync('cscript //Nologo ./wscript/iTunesFetcher.js ' + req));
+                return JSON.parse(execSync('cscript //Nologo '+__dirname+'/wscript/iTunesFetcher.js ' + req));
                 break;
             }
             case "control": {
                 try {
-                    execSync('cscript //Nologo ./wscript/iTunesControl.js ' + req);
+                    execSync('cscript //Nologo '+__dirname+'/wscript/iTunesControl.js ' + req);
                 }catch(e){
                     console.error(e);
                 }

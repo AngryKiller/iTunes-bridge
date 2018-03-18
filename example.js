@@ -1,4 +1,4 @@
-// iTunes Bridge 0.3.0-alpha by AngryKiller.
+// iTunes Bridge 0.4.1-alpha by AngryKiller.
 // GPL-3.0
 
 var iTunes = require('./itunes-bridge');
