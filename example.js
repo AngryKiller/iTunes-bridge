@@ -41,6 +41,7 @@ iTunesEmitter.on('playing', function(type, currentTrack){
 iTunesEmitter.on('paused', function(type, currentTrack){
     console.log(currentTrack.name+" is now paused!");
 });
+// Do something when iTunes is stopped
 iTunesEmitter.on('stopped', function(){
     console.log("iTunes is not longer playing!");
 });
