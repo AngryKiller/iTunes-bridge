@@ -29,8 +29,16 @@ function getCurrentTrack() {
 function run(argv) {
     switch(argv[0]){
         case "getCurrentTrack":{
-         return JSON.stringify(getCurrentTrack());
-         break;
+            return JSON.stringify(getCurrentTrack());
+            break;
+        }
+        case "getPlayerState":{
+            try {
+                return iTunes.playerState();
+            }catch (e){
+                return "stopped";
+            }
+            break;
         }
     }
 }

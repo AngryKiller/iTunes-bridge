@@ -53,6 +53,22 @@ switch(WScript.arguments(0)){
         WScript.Echo(getCurrentTrack());
         break;
     }
+    case "getPlayerState":{
+        switch(iTunesApp.PlayerState){
+            case 1:{
+                WScript.Echo("playing");
+                break;
+            }
+            case 0:{
+                if(iTunesApp.currentTrack.name !== undefined) {
+                    WScript.Echo("paused");
+                }else{
+                    WScript.Echo("stopped");
+                }
+                break;
+            }
+        }
+    }
 }
 
 

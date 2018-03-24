@@ -1,7 +1,6 @@
 // iTunes Bridge 0.4.1-alpha by AngryKiller.
 // GPL-3.0
 
-var os = require('os');
 var exports = module.exports = {};
 var fs = require('fs');
 var {execSync} = require('child_process');
@@ -20,6 +19,17 @@ exports.getCurrentTrack = function () {
         }
     } else {
         return {playerState: "stopped"};
+    }
+};
+exports.getPlayerState = function() {
+    if (isAppRunning('iTunes')) {
+        try {
+            return runScript('getPlayerState', 'fetch');
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        return "stopped";
     }
 };
 exports.play = function (song) {
