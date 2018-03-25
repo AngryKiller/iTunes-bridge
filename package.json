@@ -1,0 +1,31 @@
+{
+  "name": "itunes-bridge",
+  "version": "0.4.1",
+  "description": "A macOS and Windows NodeJS package to control and get informations from iTunes through AppleScript",
+  "main": "itunes-bridge.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AngryKiller/iTunes-bridge.git"
+  },
+  "scripts": {
+    "example": "node example.js"
+  },
+  "keywords": [
+    "itunes",
+    "nodejs",
+    "applescript",
+    "control",
+    "remote",
+    "api"
+  ],
+  "author": "AngryKiller",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/AngryKiller/iTunes-bridge/issues"
+  },
+  "homepage": "https://github.com/AngryKiller/iTunes-bridge#readme",
+  "dependencies": {
+    "@johnpaulvaughan/itunes-music-library-path": "^2.0.2",
+    "plist": "^2.1.0"
+  }
+}

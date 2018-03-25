@@ -1,19 +1,10 @@
-# iTunes-bridge
-A macOS and Windows NodeJS package to control and get informations from iTunes through AppleScript
+// iTunes Bridge 0.4.1-alpha by AngryKiller.
+// GPL-3.0
 
-#### If you need OS X Mavericks and earlier support, use the 0.3.0-alpha. No Windows support and events in this version.
-
-### This package is a WIP, a lot of functions will be added in the future and some that are already existing could change
-# Documentation
-No documentation yet, but you can look at the code of [iTunes-Discord integration](https://github.com/AngryKiller/iTunes-Discord-integration/tree/dev) that is a great example of the usages possible with iTunes-bridge.
-There is also an example.js that you can run.
-
-```js
 var iTunes = require('./itunes-bridge');
 var currentTrack = iTunes.getCurrentTrack();
 // We load the iTunes-bridge emitter to receive events
 var iTunesEmitter = iTunes.emitter;
-
 switch(currentTrack.playerState){
     case "playing": {
         var exampleMsg = "iTunes is currently playing " + currentTrack.name + " by " + currentTrack.artist + ' from the album "' + currentTrack.album + '". This song is ' + currentTrack.duration + 's long and will finish in ' + currentTrack.remainingTime+'s';
@@ -53,7 +44,3 @@ iTunesEmitter.on('paused', function(type, currentTrack){
 iTunesEmitter.on('stopped', function(){
     console.log("iTunes is not longer playing!");
 });
-
-
-```
-    
