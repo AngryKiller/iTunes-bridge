@@ -56,14 +56,14 @@ switch(WScript.arguments(0)){
     case "getPlayerState":{
         switch(iTunesApp.PlayerState){
             case 1:{
-                WScript.Echo("playing");
+                JSON.stringify(WScript.Echo("playing"));
                 break;
             }
             case 0:{
                 if(iTunesApp.currentTrack.name !== undefined) {
-                    WScript.Echo("paused");
+                    JSON.stringify(WScript.Echo("paused"));
                 }else{
-                    WScript.Echo("stopped");
+                    JSON.stringify(WScript.Echo("stopped"));
                 }
                 break;
             }

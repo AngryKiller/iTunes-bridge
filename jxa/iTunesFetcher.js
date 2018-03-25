@@ -34,7 +34,7 @@ function run(argv) {
         }
         case "getPlayerState":{
             try {
-                return iTunes.playerState();
+                return JSON.stringify(iTunes.playerState());
             }catch (e){
                 return "stopped";
             }

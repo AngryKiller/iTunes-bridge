@@ -5,7 +5,6 @@ var iTunes = require('./itunes-bridge');
 var currentTrack = iTunes.getCurrentTrack();
 // We load the iTunes-bridge emitter to receive events
 var iTunesEmitter = iTunes.emitter;
-
 switch(currentTrack.playerState){
     case "playing": {
         var exampleMsg = "iTunes is currently playing " + currentTrack.name + " by " + currentTrack.artist + ' from the album "' + currentTrack.album + '". This song is ' + currentTrack.duration + 's long and will finish in ' + currentTrack.remainingTime+'s';

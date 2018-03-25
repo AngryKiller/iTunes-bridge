@@ -13,7 +13,7 @@ var that = this;
 exports.getCurrentTrack = function () {
     if (isAppRunning('iTunes')) {
         try {
-            return runScript('getCurrentTrack', 'fetch');
+            return runScript('getCurrentTrack', 'fetch', true);
         } catch (e) {
             console.log(e);
         }
@@ -24,7 +24,7 @@ exports.getCurrentTrack = function () {
 exports.getPlayerState = function() {
     if (isAppRunning('iTunes')) {
         try {
-            return runScript('getPlayerState', 'fetch');
+            return runScript('getPlayerState', 'fetch', false);
         } catch (e) {
             console.log(e);
         }
@@ -32,6 +32,7 @@ exports.getPlayerState = function() {
         return "stopped";
     }
 };
+
 exports.play = function (song) {
     runScript('play', 'control');
 };
@@ -72,8 +73,8 @@ setInterval(function () {
         // On track change
         if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "playing") {
             that.currentTrack = currentTrack;
-            event.emit('playing', 'new_track',  currentTrack);
-        } else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "paused") {
+            event.emit('playing', 'new_track', currentTrack);
+        }else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "paused") {
             that.currentTrack = currentTrack;
             event.emit('paused', 'new_track', currentTrack);
         }else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "stopped") {
@@ -92,6 +93,10 @@ setInterval(function () {
 
 exports.emitter = event;
 
+
+/*
+ * @returns boolean
+ */
 function isAppRunning(app) {
     if(process.platform === "darwin") {
         try {
@@ -112,11 +117,15 @@ function isAppRunning(app) {
     }
 }
 
-function runScript(req, type) {
+function runScript(req, type, isJson) {
     if (process.platform === "darwin") {
         switch(type){
             case "fetch": {
-                return JSON.parse(execSync('osascript '+__dirname+'/jxa/iTunesFetcher.js ' + req));
+                if(isJson) {
+                    return JSON.parse(execSync('osascript ' + __dirname + '/jxa/iTunesFetcher.js ' + req));
+                }else{
+                    return execSync('osascript ' + __dirname + '/jxa/iTunesFetcher.js ' + req);
+                }
                 break;
             }
             case "control": {
@@ -131,7 +140,11 @@ function runScript(req, type) {
     } else if (process.platform === "win32") {
         switch(type){
             case "fetch": {
-                return JSON.parse(execSync('cscript //Nologo '+__dirname+'/wscript/iTunesFetcher.js ' + req));
+                if(isJson) {
+                    return JSON.parse(execSync('cscript //Nologo ' + __dirname + '/wscript/iTunesFetcher.js ' + req));
+                }else{
+                    return execSync('cscript //Nologo ' + __dirname + '/wscript/iTunesFetcher.js ' + req);
+                }
                 break;
             }
             case "control": {
