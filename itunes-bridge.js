@@ -13,6 +13,7 @@ var that = this;
 
 /** Get informations about the current playing track
  * @returns {object}
+ * @example {"name":"Business","artist":"Eminem","album":"The Eminem Show (Explicit Version)","mediaKind":"song","duration":251,"elapsedTime":2,"remainingTime":249,"genre":"Rap/Hip Hop","releaseYear":2002,"id":2630,"playerState":"playing"}
  */
 exports.getCurrentTrack = function () {
     if (exports.isRunning()) {
@@ -27,7 +28,8 @@ exports.getCurrentTrack = function () {
 };
 /**
  * Get the player state
- * @returns {string}
+ * @returns {string} - Possible values: playing, stopped or paused
+ * @example "playing"
  */
 exports.getPlayerState = function() {
     if (exports.isRunning()) {
@@ -57,6 +59,35 @@ exports.pause = function (){
  * @param {int} id - The id of the track
  * @param {string} libPath - The path of the iTunes library
  * @returns {object}
+ * @example  { 'Track ID': 1428,
+     Size: 9019045,
+     'Total Time': 217103,
+     'Disc Number': 1,
+     'Disc Count': 1,
+     'Track Number': 14,
+     'Track Count': 16,
+     Year: 2011,
+     BPM: 99,
+     'Date Modified': 2018-03-18T22:37:46.000Z,
+     'Date Added': 2018-03-24T14:03:15.000Z,
+     'Bit Rate': 320,
+     'Sample Rate': 44100,
+     'Play Count': 3,
+     'Play Date': 3604816264,
+     'Play Date UTC': 2018-03-25T07:51:04.000Z,
+     'Artwork Count': 1,
+     'Persistent ID': '535F1580FAEB42E4',
+     'Track Type': 'File',
+     'File Folder Count': 5,
+     'Library Folder Count': 1,
+     Name: 'Ils sont cools',
+     Artist: 'Orelsan, Gringe',
+     'Album Artist': 'Orelsan',
+     Album: 'Le chant des sirènes',
+     Genre: 'Rap/Hip Hop',
+     Kind: 'Fichier audio MPEG',
+     'Sort Album': 'chant des sirènes',
+     Location: 'file:///Users/steve/Music/iTunes/iTunes%20Media/Music/Orelsan/Le%20chant%20des%20sire%CC%80nes/14%20Ils%20sont%20cools.mp3' }
  */
 exports.getTrack = function(id, libPath) {
     try {
