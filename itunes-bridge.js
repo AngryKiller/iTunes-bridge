@@ -1,6 +1,7 @@
 // iTunes Bridge 0.4.1-alpha by AngryKiller.
 // GPL-3.0
-
+/** @license GPL-3.0 */
+/** @author AngryKiller */
 var exports = module.exports = {};
 var fs = require('fs');
 var {execSync} = require('child_process');
@@ -10,8 +11,11 @@ var plist = require('plist');
 
 var that = this;
 
+/** Get informations about the current playing track
+ * @returns {object}
+ */
 exports.getCurrentTrack = function () {
-    if (isAppRunning('iTunes')) {
+    if (exports.isRunning()) {
         try {
             return runScript('getCurrentTrack', 'fetch', true);
         } catch (e) {
@@ -21,8 +25,12 @@ exports.getCurrentTrack = function () {
         return {playerState: "stopped"};
     }
 };
+/**
+ * Get the player state
+ * @returns {string}
+ */
 exports.getPlayerState = function() {
-    if (isAppRunning('iTunes')) {
+    if (exports.isRunning()) {
         try {
             return runScript('getPlayerState', 'fetch', false);
         } catch (e) {
@@ -32,13 +40,24 @@ exports.getPlayerState = function() {
         return "stopped";
     }
 };
-
+/**
+ * Tells iTunes to play
+ */
 exports.play = function (song) {
     runScript('play', 'control');
 };
+/**
+ * Tells iTunes to pause
+ */
 exports.pause = function (){
     runScript('pause', 'control');
 };
+/**
+ * Gets informations about a track from the library
+ * @param {int} id - The id of the track
+ * @param {string} libPath - The path of the iTunes library
+ * @returns {object}
+ */
 exports.getTrack = function(id, libPath) {
     try {
         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
@@ -47,6 +66,12 @@ exports.getTrack = function(id, libPath) {
         return "not_found";
     }
 };
+/**
+ * Gets the playlist count from the library
+ *
+ * @param {string} libPath - The path of the iTunes library
+ * @returns {int}
+ */
 exports.getPlaylistCount = function (libPath) {
     try {
         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
@@ -56,6 +81,11 @@ exports.getPlaylistCount = function (libPath) {
     }
 };
 // TODO: Support for arguments in the track count (album, artist, playlist...)
+/**
+ * Gets the track count from the library
+ * @param {string} libPath
+ * @returns {int}
+ */
 exports.getTrackCount = function (libPath) {
     try {
         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
@@ -71,20 +101,37 @@ setInterval(function () {
     var currentTrack = exports.getCurrentTrack();
     if (currentTrack && that.currentTrack) {
         // On track change
+        /**
+         * Emits a playing event
+         *
+         * @fires iTunes-bridge#playing
+         */
         if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "playing") {
             that.currentTrack = currentTrack;
-            event.emit('playing', 'new_track', currentTrack);
-        }else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "paused") {
+            emit('playing', 'new_track', currentTrack);
+        }
+        /**
+         * Emits a paused event
+         *
+         * @fires iTunes-bridge#paused
+         */
+        else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "paused") {
             that.currentTrack = currentTrack;
-            event.emit('paused', 'new_track', currentTrack);
-        }else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "stopped") {
+            emit('paused', 'new_track', currentTrack);
+        }
+        /**
+         * Emits a stopped event
+         *
+         * @fires iTunes-bridge#stopped
+         */
+        else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "stopped") {
             that.currentTrack = {"playerState": "stopped"};
-            event.emit('stopped');
+            emit('stopped');
         }
         // On player state change
         if (currentTrack.playerState !== that.currentTrack.playerState && currentTrack.id === that.currentTrack.id) {
             that.currentTrack.playerState = currentTrack.playerState;
-            event.emit(currentTrack.playerState, 'player_state_change', currentTrack);
+            emit(currentTrack.playerState, 'player_state_change', currentTrack);
         }
     } else {
         that.currentTrack = currentTrack;
@@ -93,14 +140,17 @@ setInterval(function () {
 
 exports.emitter = event;
 
-
-/*
- * @returns boolean
+function emit(playerState, type, track){
+    event.emit(playerState, type, track);
+}
+/**
+ * Function to know if iTunes is running
+ * @returns {boolean}
  */
-function isAppRunning(app) {
+exports.isRunning = function() {
     if(process.platform === "darwin") {
         try {
-            execSync('pgrep -x "' + app + '"');
+            execSync('pgrep -x "iTunes"');
             return true;
         }
         catch (err) {
@@ -115,7 +165,7 @@ function isAppRunning(app) {
             return false;
         }
     }
-}
+};
 
 function runScript(req, type, isJson) {
     if (process.platform === "darwin") {

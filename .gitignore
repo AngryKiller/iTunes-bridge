@@ -58,3 +58,4 @@ typings/
 .env
 # IntelliJ IDEs files
 .idea
+out
