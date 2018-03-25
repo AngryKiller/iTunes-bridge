@@ -1,13 +1,13 @@
 # iTunes-bridge
 A macOS and Windows NodeJS package to control and get informations from iTunes through AppleScript
 
-#### If you need OS X Mavericks and earlier support, use the 0.3.0-alpha. No Windows support and events in this version.
+##### If you need OS X Mavericks and earlier support, use the 0.3.0-alpha, but you will have no Windows support and events in this version.
 
 ### This package is a WIP, a lot of functions will be added in the future and some that are already existing could change
 # Documentation
-No documentation yet, but you can look at the code of [iTunes-Discord integration](https://github.com/AngryKiller/iTunes-Discord-integration/tree/dev) that is a great example of the usages possible with iTunes-bridge.
-There is also an example.js that you can run.
+You can found it at [itunes-bridge.js.org](https://itunes-bridge.js.org)
 
+# Example
 ```js
 var iTunes = require('./itunes-bridge');
 var currentTrack = iTunes.getCurrentTrack();
