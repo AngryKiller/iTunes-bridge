@@ -1,10 +1,19 @@
-// iTunes Bridge 0.4.1-alpha by AngryKiller.
-// GPL-3.0
+/**
+ * An example file to learn how iTunes-bridge works
+ *
+ * @projectname  iTunes-bridge
+ * @version 0.5.0-beta
+ * @author AngryKiller
+ * @copyright 2018
+ * @license GPL-3.0
+ *
+ */
 
 var iTunes = require('./itunes-bridge');
 var currentTrack = iTunes.getCurrentTrack();
 // We load the iTunes-bridge emitter to receive events
 var iTunesEmitter = iTunes.emitter;
+
 switch(currentTrack.playerState){
     case "playing": {
         var exampleMsg = "iTunes is currently playing " + currentTrack.name + " by " + currentTrack.artist + ' from the album "' + currentTrack.album + '". This song is ' + currentTrack.duration + 's long and will finish in ' + currentTrack.remainingTime+'s';

@@ -1,7 +1,13 @@
-// iTunes Bridge 0.4.1-alpha by AngryKiller.
-// GPL-3.0
-/** @license GPL-3.0 */
-/** @author AngryKiller */
+/**
+ * This JavaScript file contains the magic.
+ *
+ * @projectname  iTunes-bridge
+ * @version 0.5.0-beta
+ * @author AngryKiller
+ * @copyright 2018
+ * @license GPL-3.0
+ *
+ */
 var exports = module.exports = {};
 var fs = require('fs');
 var {execSync} = require('child_process');
