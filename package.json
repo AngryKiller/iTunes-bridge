@@ -1,6 +1,6 @@
 {
   "name": "itunes-bridge",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A macOS and Windows NodeJS package to control and get informations from iTunes through AppleScript",
   "main": "itunes-bridge.js",
   "repository": {
