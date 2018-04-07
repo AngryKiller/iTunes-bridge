@@ -2,7 +2,7 @@
  * This JavaScript file contains the magic.
  *
  * @projectname  iTunes-bridge
- * @version 0.6.0-beta
+ * @version 0.6.1-beta
  * @author AngryKiller
  * @copyright 2018
  * @license GPL-3.0
@@ -221,7 +221,7 @@ function runScript(req, type, isJson) {
     if (process.platform === "darwin") {
         if(electron.isElectron){
             var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesControl.js'));
-            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesFetcber.js'));
+            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesFetcher.js'));
         }else{
             var iTunesCtrlScpt  = path.join(__dirname, '/jxa/iTunesControl.js');
             var iTunesFetcherScpt  = path.join(__dirname, '/jxa/iTunesFetcher.js');
@@ -248,7 +248,7 @@ function runScript(req, type, isJson) {
     } else if (process.platform === "win32") {
         if(electron.isElectron){
             var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesControl.js'));
-            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesFetcber.js'));
+            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesFetcher.js'));
         }else{
             var iTunesCtrlScpt  = path.join(__dirname, '/wscript/iTunesControl.js');
             var iTunesFetcherScpt  = path.join(__dirname, '/wscript/iTunesFetcher.js');
