@@ -2,7 +2,7 @@
  * This JavaScript file contains the magic.
  *
  * @projectname  iTunes-bridge
- * @version 0.5.0-beta
+ * @version 0.6.0-beta
  * @author AngryKiller
  * @copyright 2018
  * @license GPL-3.0

@@ -56,4 +56,15 @@ iTunesEmitter.on('stopped', function(){
 
 
 ```
+
+# Using with Electron
+
+If you want to use iTunes-bridge with Electron and the ASAR compression system, you need to use electron-builder and add the following to your package.json:
+
+```json
+    "asarUnpack": [
+      "node_modules/itunes-bridge/wscript",
+      "node_modules/itunes-bridge/jxa"
+    ]
+```
     
