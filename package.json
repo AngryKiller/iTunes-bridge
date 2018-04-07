@@ -27,6 +27,7 @@
   "homepage": "https://github.com/AngryKiller/iTunes-bridge#readme",
   "dependencies": {
     "@johnpaulvaughan/itunes-music-library-path": "^2.0.2",
+    "electron-util": "^0.8.0",
     "plist": "^2.1.0"
   },
   "devDependencies": {

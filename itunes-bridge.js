@@ -14,12 +14,25 @@ var {execSync} = require('child_process');
 var events = require('events');
 var event = new events.EventEmitter();
 var plist = require('plist');
+var path = require('path');
+var electron = require('electron-util/node');
+
 
 var that = this;
 
 /** Get informations about the current playing track
  * @returns {object}
- * @example {"name":"Business","artist":"Eminem","album":"The Eminem Show (Explicit Version)","mediaKind":"song","duration":251,"elapsedTime":2,"remainingTime":249,"genre":"Rap/Hip Hop","releaseYear":2002,"id":2630,"playerState":"playing"}
+ * @example {"name":"Business",
+  "artist":"Eminem",
+  "album":"The Eminem Show (Explicit Version)",
+  "mediaKind":"song",
+  "duration":251,
+  "elapsedTime":2,
+  "remainingTime":249,
+  "genre":"Rap/Hip Hop",
+  "releaseYear":2002,
+  "id":2630,
+  "playerState":"playing"}
  */
 exports.getCurrentTrack = function () {
     if (exports.isRunning()) {
@@ -206,18 +219,26 @@ exports.isRunning = function() {
 
 function runScript(req, type, isJson) {
     if (process.platform === "darwin") {
+        if(electron.isElectron){
+            var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesControl.js'));
+            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesFetcber.js'));
+        }else{
+            var iTunesCtrlScpt  = path.join(__dirname, '/jxa/iTunesControl.js');
+            var iTunesFetcherScpt  = path.join(__dirname, '/jxa/iTunesFetcher.js');
+
+        }
         switch(type){
             case "fetch": {
                 if(isJson) {
-                    return JSON.parse(execSync('osascript ' + __dirname + '/jxa/iTunesFetcher.js ' + req));
+                    return JSON.parse(execSync('osascript ' +iTunesFetcherScpt+' '  + req));
                 }else{
-                    return execSync('osascript ' + __dirname + '/jxa/iTunesFetcher.js ' + req);
+                    return execSync('osascript ' +iTunesFetcherScpt+' ' + req);
                 }
                 break;
             }
             case "control": {
                 try {
-                    execSync('osascript '+__dirname+'/jxa/iTunesControl.js ' + req);
+                    execSync('osascript '+iTunesCtrlScpt+' ' + req);
                 }catch(e){
                     console.error(e);
                 }
@@ -225,18 +246,26 @@ function runScript(req, type, isJson) {
             }
         }
     } else if (process.platform === "win32") {
+        if(electron.isElectron){
+            var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesControl.js'));
+            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesFetcber.js'));
+        }else{
+            var iTunesCtrlScpt  = path.join(__dirname, '/wscript/iTunesControl.js');
+            var iTunesFetcherScpt  = path.join(__dirname, '/wscript/iTunesFetcher.js');
+
+        }
         switch(type){
             case "fetch": {
                 if(isJson) {
-                    return JSON.parse(execSync('cscript //Nologo ' + __dirname + '/wscript/iTunesFetcher.js ' + req));
+                    return JSON.parse(execSync('cscript //Nologo ' + iTunesFetcherScpt + ' ' + req));
                 }else{
-                    return execSync('cscript //Nologo ' + __dirname + '/wscript/iTunesFetcher.js ' + req);
+                    return execSync('cscript //Nologo ' + iTunesFetcherScpt+' ' + req);
                 }
                 break;
             }
             case "control": {
                 try {
-                    execSync('cscript //Nologo '+__dirname+'/wscript/iTunesControl.js ' + req);
+                    execSync('cscript //Nologo '+ iTunesCtrlScpt+' ' + req);
                 }catch(e){
                     console.error(e);
                 }
@@ -246,3 +275,4 @@ function runScript(req, type, isJson) {
     }
 
 }
+
