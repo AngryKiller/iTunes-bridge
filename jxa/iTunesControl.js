@@ -14,5 +14,9 @@ function run(argv) {
             iTunes.pause();
             break;
         }
+        case "stop": {
+            iTunes.stop();
+            break;
+        }
     }
 }

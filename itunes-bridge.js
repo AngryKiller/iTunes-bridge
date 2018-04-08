@@ -86,6 +86,12 @@ exports.pause = function (){
     runScript('pause', 'control');
 };
 /**
+ * Tells iTunes to stop
+ */
+exports.stop = function (){
+    runScript('stop', 'control');
+};
+/**
  * Gets informations about a track from the library
  * @param {int} id - The id of the track
  * @param {string} libPath - The path of the iTunes library

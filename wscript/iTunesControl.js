@@ -10,4 +10,8 @@ switch(WScript.arguments(0)){
         iTunesApp.pause();
         break;
     }
+    case "stop":{
+        iTunesApp.stop();
+        break;
+    }
 }
