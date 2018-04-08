@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html"></a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getCurrentTrack">getCurrentTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPlayerState">getPlayerState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPlaylistCount">getPlaylistCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrack">getTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrackCount">getTrackCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#isRunning">isRunning</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#pause">pause</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#play">play</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Events</li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:paused">paused</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:playing">playing</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:stopped">stopped</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html"></a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getCurrentTrack">getCurrentTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPlayerState">getPlayerState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPlaylistCount">getPlaylistCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrack">getTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrackCount">getTrackCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#isRunning">isRunning</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#pause">pause</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#play">play</a></span></li>
 </nav>
 
 <div id="main">
@@ -43,7 +43,7 @@
  * This JavaScript file contains the magic.
  *
  * @projectname  iTunes-bridge
- * @version 0.5.0-beta
+ * @version 0.6.1-beta
  * @author AngryKiller
  * @copyright 2018
  * @license GPL-3.0
@@ -199,7 +199,15 @@ setInterval(function () {
          */
         if (currentTrack.id !== that.currentTrack.id &amp;&amp; currentTrack.playerState === "playing") {
             that.currentTrack = currentTrack;
-            emit('playing', 'new_track', currentTrack);
+            /**
+             * Playing event
+             *
+             * @event iTunes-bridge#playing
+             * @type {object}
+             * @property {string} type - Indicates whenever the player has been resumed or this is a new track being played.
+             * @property {object} currentTrack - Gives the current track
+             */
+            event.emit('playing', 'new_track', currentTrack);
         }
         /**
          * Emits a paused event
@@ -208,7 +216,15 @@ setInterval(function () {
          */
         else if (currentTrack.id !== that.currentTrack.id &amp;&amp; currentTrack.playerState === "paused") {
             that.currentTrack = currentTrack;
-            emit('paused', 'new_track', currentTrack);
+            /**
+             * Paused event
+             *
+             * @event iTunes-bridge#paused
+             * @type {object}
+             * @property {string} type - Indicates whenever the player has been resumed or this is a new track being played.
+             * @property {object} currentTrack - Gives the current track
+             */
+            event.emit('paused', 'new_track', currentTrack);
         }
         /**
          * Emits a stopped event
@@ -217,26 +233,29 @@ setInterval(function () {
          */
         else if (currentTrack.id !== that.currentTrack.id &amp;&amp; currentTrack.playerState === "stopped") {
             that.currentTrack = {"playerState": "stopped"};
-            emit('stopped');
+            /**
+             * Stopped event.
+             *
+             * @event iTunes-bridge#stopped
+             * @type {object}
+             */
+            event.emit('stopped');
         }
         // On player state change
         if (currentTrack.playerState !== that.currentTrack.playerState &amp;&amp; currentTrack.id === that.currentTrack.id) {
             that.currentTrack.playerState = currentTrack.playerState;
-            emit(currentTrack.playerState, 'player_state_change', currentTrack);
+            event.emit(currentTrack.playerState, 'player_state_change', currentTrack);
         }
     } else {
         that.currentTrack = currentTrack;
     }
-}, 1000);
+}, 1500);
 
 exports.emitter = event;
 
-function emit(playerState, type, track){
-    event.emit(playerState, type, track);
-}
 /**
  * Function to know if iTunes is running
- * @returns {boolean}
+ * @returns {boolean} - true or false
  */
 exports.isRunning = function() {
     if(process.platform === "darwin") {
@@ -262,7 +281,7 @@ function runScript(req, type, isJson) {
     if (process.platform === "darwin") {
         if(electron.isElectron){
             var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesControl.js'));
-            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesFetcber.js'));
+            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesFetcher.js'));
         }else{
             var iTunesCtrlScpt  = path.join(__dirname, '/jxa/iTunesControl.js');
             var iTunesFetcherScpt  = path.join(__dirname, '/jxa/iTunesFetcher.js');
@@ -289,7 +308,7 @@ function runScript(req, type, isJson) {
     } else if (process.platform === "win32") {
         if(electron.isElectron){
             var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesControl.js'));
-            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesFetcber.js'));
+            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesFetcher.js'));
         }else{
             var iTunesCtrlScpt  = path.join(__dirname, '/wscript/iTunesControl.js');
             var iTunesFetcherScpt  = path.join(__dirname, '/wscript/iTunesFetcher.js');
@@ -329,7 +348,7 @@ function runScript(req, type, isJson) {
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Apr 07 2018 18:17:08 GMT+0200 (CEST) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 08 2018 22:00:07 GMT+0200 (CEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

@@ -158,7 +158,15 @@ setInterval(function () {
          */
         if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "playing") {
             that.currentTrack = currentTrack;
-            emit('playing', 'new_track', currentTrack);
+            /**
+             * Playing event
+             *
+             * @event iTunes-bridge#playing
+             * @type {object}
+             * @property {string} type - Indicates whenever the player has been resumed or this is a new track being played.
+             * @property {object} currentTrack - Gives the current track
+             */
+            event.emit('playing', 'new_track', currentTrack);
         }
         /**
          * Emits a paused event
@@ -167,7 +175,15 @@ setInterval(function () {
          */
         else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "paused") {
             that.currentTrack = currentTrack;
-            emit('paused', 'new_track', currentTrack);
+            /**
+             * Paused event
+             *
+             * @event iTunes-bridge#paused
+             * @type {object}
+             * @property {string} type - Indicates whenever the player has been resumed or this is a new track being played.
+             * @property {object} currentTrack - Gives the current track
+             */
+            event.emit('paused', 'new_track', currentTrack);
         }
         /**
          * Emits a stopped event
@@ -176,26 +192,29 @@ setInterval(function () {
          */
         else if (currentTrack.id !== that.currentTrack.id && currentTrack.playerState === "stopped") {
             that.currentTrack = {"playerState": "stopped"};
-            emit('stopped');
+            /**
+             * Stopped event.
+             *
+             * @event iTunes-bridge#stopped
+             * @type {object}
+             */
+            event.emit('stopped');
         }
         // On player state change
         if (currentTrack.playerState !== that.currentTrack.playerState && currentTrack.id === that.currentTrack.id) {
             that.currentTrack.playerState = currentTrack.playerState;
-            emit(currentTrack.playerState, 'player_state_change', currentTrack);
+            event.emit(currentTrack.playerState, 'player_state_change', currentTrack);
         }
     } else {
         that.currentTrack = currentTrack;
     }
-}, 1000);
+}, 1500);
 
 exports.emitter = event;
 
-function emit(playerState, type, track){
-    event.emit(playerState, type, track);
-}
 /**
  * Function to know if iTunes is running
- * @returns {boolean}
+ * @returns {boolean} - true or false
  */
 exports.isRunning = function() {
     if(process.platform === "darwin") {
