@@ -1,13 +1,14 @@
 /**
  * This JavaScript file contains the magic.
  *
- * @projectname  iTunes-bridge
+ * iTunes-bridge
  * @version 0.6.1-beta
  * @author AngryKiller
  * @copyright 2018
  * @license GPL-3.0
  *
  */
+
 var exports = module.exports = {};
 var fs = require('fs');
 var {execSync} = require('child_process');
@@ -59,6 +60,17 @@ exports.getPlayerState = function() {
         }
     } else {
         return "stopped";
+    }
+};
+exports.soundVolume = function(volume) {
+    if (exports.isRunning()) {
+        try{
+            return runScript('getSoundVolume', 'fetch', false);
+        }catch(e){
+            console.log(e);
+        }
+    }else{
+        console.log("iTunes is not running");
     }
 };
 /**

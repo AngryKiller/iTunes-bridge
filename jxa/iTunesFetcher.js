@@ -25,7 +25,9 @@ function getCurrentTrack() {
         return {"playerState": "stopped"};
     }
 }
-
+function getSoundVolume() {
+    return iTunes.soundVolume();
+}
 function run(argv) {
     switch(argv[0]){
         case "getCurrentTrack":{
@@ -38,6 +40,10 @@ function run(argv) {
             }catch (e){
                 return "stopped";
             }
+            break;
+        }
+        case "getSoundVolume":{
+            return getSoundVolume();
             break;
         }
     }
