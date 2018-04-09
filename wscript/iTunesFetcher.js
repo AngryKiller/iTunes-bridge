@@ -53,6 +53,10 @@ switch(WScript.arguments(0)){
         WScript.Echo(getCurrentTrack());
         break;
     }
+    case "getSoundVolume":{
+        WScript.Echo(iTunesApp.SoundVolume);
+        break;
+    }
     case "getPlayerState":{
         switch(iTunesApp.PlayerState){
             case 1:{

@@ -294,9 +294,9 @@ function runScript(req, type, isJson) {
         switch(type){
             case "fetch": {
                 if(isJson) {
-                    return JSON.parse(execSync('cscript //Nologo ' + iTunesFetcherScpt + ' ' + req));
+                    return JSON.parse(execSync('cscript //Nologo ' + iTunesFetcherScpt + ' ' + req, { encoding: 'utf8'}));
                 }else{
-                    return execSync('cscript //Nologo ' + iTunesFetcherScpt+' ' + req);
+                    return execSync('cscript //Nologo ' + iTunesFetcherScpt+' ' + req, { encoding: 'utf8'});
                 }
                 break;
             }

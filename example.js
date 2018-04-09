@@ -14,9 +14,9 @@ var currentTrack = iTunes.getCurrentTrack();
 // We load the iTunes-bridge emitter to receive events
 var iTunesEmitter = iTunes.emitter;
 
-switch(currentTrack.playerState){
+switch(currentTrack.playerState) {
     case "playing": {
-        var exampleMsg = "iTunes is currently playing " + currentTrack.name + " by " + currentTrack.artist + ' from the album "' + currentTrack.album + '". This song is ' + currentTrack.duration + 's long and will finish in ' + currentTrack.remainingTime+'s';
+        var exampleMsg = "iTunes is currently playing " + currentTrack.name + " by " + currentTrack.artist + ' from the album "' + currentTrack.album + '". This song is ' + currentTrack.duration + 's long and will finish in ' + currentTrack.remainingTime + 's';
         var exampleMsg2 = "You have " + iTunes.getPlaylistCount('/Users/steve/Music/iTunes/iTunes Library.xml') + " playlists in your library and " + iTunes.getTrackCount('/Users/steve/Music/iTunes/iTunes Library.xml') + " tracks!";
         console.log(exampleMsg);
         console.log(exampleMsg2);
@@ -32,7 +32,7 @@ switch(currentTrack.playerState){
         console.log(exampleMsg);
         break;
     }
-};
+}
 
 // Do something when iTunes is playing
 iTunesEmitter.on('playing', function(type, currentTrack){
