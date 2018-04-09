@@ -14,4 +14,8 @@ switch(WScript.arguments(0)){
         iTunesApp.stop();
         break;
     }
+    case "setSoundVolume":{
+        iTunesApp.SoundVolume(WScript.arguments(1));
+        break;
+    }
 }

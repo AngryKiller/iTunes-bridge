@@ -38,7 +38,7 @@ var that = this;
 exports.getCurrentTrack = function () {
     if (exports.isRunning()) {
         try {
-            return runScript('getCurrentTrack', 'fetch', true);
+            return runScript('getCurrentTrack', 'fetch', undefined, true);
         } catch (e) {
             console.log(e);
         }
@@ -54,7 +54,7 @@ exports.getCurrentTrack = function () {
 exports.getPlayerState = function() {
     if (exports.isRunning()) {
         try {
-            return runScript('getPlayerState', 'fetch', false);
+            return runScript('getPlayerState', 'fetch', undefined, false);
         } catch (e) {
             console.log(e);
         }
@@ -62,12 +62,25 @@ exports.getPlayerState = function() {
         return "stopped";
     }
 };
+/**
+ * Gets the iTunes sound volume or sets it if there's a parameter (Windows only)
+ * @param volume {int} - Windows only
+ * @returns {int}
+ */
 exports.soundVolume = function(volume) {
     if (exports.isRunning()) {
-        try{
-            return runScript('getSoundVolume', 'fetch', false);
-        }catch(e){
-            console.log(e);
+        if(volume !== undefined && !isNaN(volume) && process.platform === "win32"){
+            try{
+                return runScript('setSoundVolume', 'control', volume);
+            }catch(e){
+                console.log(e);
+            }
+        }else{
+            try {
+                return runScript('getSoundVolume', 'fetch', undefined, false);
+            } catch (e) {
+                console.log(e);
+            }
         }
     }else{
         console.log("iTunes is not running");
@@ -254,7 +267,7 @@ exports.isRunning = function() {
     }
 };
 
-function runScript(req, type, isJson) {
+function runScript(req, type, args, isJson) {
     if (process.platform === "darwin") {
         if(electron.isElectron){
             var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesControl.js'));
@@ -275,7 +288,7 @@ function runScript(req, type, isJson) {
             }
             case "control": {
                 try {
-                    execSync('osascript '+iTunesCtrlScpt+' ' + req);
+                    execSync('osascript '+iTunesCtrlScpt+' ' + req+' '+args);
                 }catch(e){
                     console.error(e);
                 }
@@ -302,7 +315,7 @@ function runScript(req, type, isJson) {
             }
             case "control": {
                 try {
-                    execSync('cscript //Nologo '+ iTunesCtrlScpt+' ' + req);
+                    execSync('cscript //Nologo '+ iTunesCtrlScpt+' ' + req+' '+args);
                 }catch(e){
                     console.error(e);
                 }
