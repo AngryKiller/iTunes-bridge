@@ -17,7 +17,14 @@ var event = new events.EventEmitter();
 var plist = require('plist');
 var path = require('path');
 var electron = require('electron-util/node');
+var os = require('os');
 
+
+if(process.platform === "darwin"){
+    var libPath = path.resolve(os.homedir() + "/Music/iTunes/iTunes Library.xml");
+}else if(process.platform === "win32"){
+    var libPath = path.resolve(os.homedir() + "/My Music/iTunes/iTunes Library.xml");
+}
 
 var that = this;
 
@@ -107,7 +114,6 @@ exports.stop = function (){
 /**
  * Gets informations about a track from the library
  * @param {int} id - The id of the track
- * @param {string} libPath - The path of the iTunes library
  * @returns {object}
  * @example  { 'Track ID': 1428,
      Size: 9019045,
@@ -139,7 +145,7 @@ exports.stop = function (){
      'Sort Album': 'chant des sirènes',
      Location: 'file:///Users/steve/Music/iTunes/iTunes%20Media/Music/Orelsan/Le%20chant%20des%20sire%CC%80nes/14%20Ils%20sont%20cools.mp3' }
  */
-exports.getTrack = function(id, libPath) {
+exports.getTrack = function(id) {
     try {
         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
         return obj.Tracks[id];
@@ -149,11 +155,9 @@ exports.getTrack = function(id, libPath) {
 };
 /**
  * Gets the playlist count from the library
- *
- * @param {string} libPath - The path of the iTunes library
  * @returns {int}
  */
-exports.getPlaylistCount = function (libPath) {
+exports.getPlaylistCount = function () {
     try {
         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
         return Object.keys(obj.Playlists).length;
@@ -164,13 +168,12 @@ exports.getPlaylistCount = function (libPath) {
 // TODO: Support for arguments in the track count (album, artist, playlist...)
 /**
  * Gets the track count from the library
- * @param {string} libPath
  * @returns {int}
  */
-exports.getTrackCount = function (libPath) {
+exports.getTrackCount = function () {
     try {
         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
-        return Object.keys(obj.Tracks).length;
+        return (Object.keys(obj.Tracks).length + 1);
     } catch (err) {
         return null;
     }
@@ -266,6 +269,14 @@ exports.isRunning = function() {
         }
     }
 };
+
+function getUsername(){
+    if(process.platform === "darwin"){
+        return execSync('whoami');
+    }else if(proceess.platform === "win32"){
+        return execSync('ECHO %USERNAME%');
+    }
+}
 
 function runScript(req, type, args, isJson) {
     if (process.platform === "darwin") {
