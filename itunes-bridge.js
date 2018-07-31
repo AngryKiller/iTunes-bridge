@@ -261,7 +261,7 @@ exports.isRunning = function() {
         }
     }else if(process.platform === "win32"){
         try {
-            execSync('CALL isAppRunning.bat');
+            execSync('tasklist | find "iTunes.exe');
             return true;
         }
         catch (err) {
