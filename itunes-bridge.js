@@ -178,6 +178,23 @@ exports.getTrackCount = function () {
     }
 };
 
+// Sends an event on module load
+
+switch(exports.getCurrentTrack().playerState){
+    case "playing":{
+        event.emit('playing', 'new_track', exports.getCurrentTrack());
+        break;
+    }
+    case "paused":{
+        event.emit('paused', 'new_track', exports.getCurrentTrack());
+        break;
+    }
+    case "stopped":{
+        event.emit('stopped');
+    }
+}
+
+
 // Starting the event system (track change and player state change)
 that.currentTrack = null;
 setInterval(function () {
