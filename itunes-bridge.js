@@ -2,7 +2,6 @@
  * This JavaScript file contains the magic.
  *
  * iTunes-bridge
- * @version 0.6.1-beta
  * @author AngryKiller
  * @copyright 2018
  * @license GPL-3.0
@@ -270,13 +269,6 @@ exports.isRunning = function() {
     }
 };
 
-function getUsername(){
-    if(process.platform === "darwin"){
-        return execSync('whoami');
-    }else if(proceess.platform === "win32"){
-        return execSync('ECHO %USERNAME%');
-    }
-}
 
 function runScript(req, type, args, isJson) {
     if (process.platform === "darwin") {
