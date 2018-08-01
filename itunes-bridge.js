@@ -178,21 +178,7 @@ exports.getTrackCount = function () {
     }
 };
 
-// Sends an event on module load
 
-switch(exports.getCurrentTrack().playerState){
-    case "playing":{
-        event.emit('playing', 'new_track', exports.getCurrentTrack());
-        break;
-    }
-    case "paused":{
-        event.emit('paused', 'new_track', exports.getCurrentTrack());
-        break;
-    }
-    case "stopped":{
-        event.emit('stopped');
-    }
-}
 
 
 // Starting the event system (track change and player state change)
@@ -346,3 +332,25 @@ function runScript(req, type, args, isJson) {
 
 }
 
+// Sends an event on module load
+
+// If you're wondering why there's a timeout, that's because if you use this in another module, you will require this file AND THEN load the eventemitter, so if these events are emitted immediately, you will never receive them :')
+setTimeout(function(){
+    switch(exports.getCurrentTrack().playerState){
+        case "playing":{
+            console.log("issou");
+            event.emit('playing', 'new_track', exports.getCurrentTrack());
+            break;
+        }
+        case "paused":{
+            console.log("yatangaki");
+            event.emit('paused', 'new_track', exports.getCurrentTrack());
+            break;
+        }
+        case "stopped":{
+            console.log("la chancla");
+            event.emit('stopped');
+            break;
+        }
+    }
+}, 500);
