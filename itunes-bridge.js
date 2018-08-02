@@ -338,17 +338,14 @@ function runScript(req, type, args, isJson) {
 setTimeout(function(){
     switch(exports.getCurrentTrack().playerState){
         case "playing":{
-            console.log("issou");
             event.emit('playing', 'new_track', exports.getCurrentTrack());
             break;
         }
         case "paused":{
-            console.log("yatangaki");
             event.emit('paused', 'new_track', exports.getCurrentTrack());
             break;
         }
         case "stopped":{
-            console.log("la chancla");
             event.emit('stopped');
             break;
         }
