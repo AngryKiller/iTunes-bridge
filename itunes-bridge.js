@@ -273,8 +273,8 @@ exports.isRunning = function() {
 
 
 function runScript(req, type, args, isJson) {
-    
-    if (process.platform === "win32"){
+
+    if (process.platform === "darwin"){
             var iTunesCtrlScpt  = path.join(__dirname, '/jxa/iTunesControl.js');
             var iTunesFetcherScpt  = path.join(__dirname, '/jxa/iTunesFetcher.js');
         switch(type){
