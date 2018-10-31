@@ -15,7 +15,6 @@ var events = require('events');
 var event = new events.EventEmitter();
 var plist = require('plist');
 var path = require('path');
-var electron = require('electron-util/node');
 var os = require('os');
 
 
@@ -274,15 +273,8 @@ exports.isRunning = function() {
 
 
 function runScript(req, type, args, isJson) {
-    if (process.platform === "darwin") {
-        if(electron.isElectron){
-            var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesControl.js'));
-            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesFetcher.js'));
-        }else{
             var iTunesCtrlScpt  = path.join(__dirname, '/jxa/iTunesControl.js');
             var iTunesFetcherScpt  = path.join(__dirname, '/jxa/iTunesFetcher.js');
-
-        }
         switch(type){
             case "fetch": {
                 if(isJson) {
@@ -302,14 +294,8 @@ function runScript(req, type, args, isJson) {
             }
         }
     } else if (process.platform === "win32") {
-        if(electron.isElectron){
-            var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesControl.js'));
-            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesFetcher.js'));
-        }else{
             var iTunesCtrlScpt  = path.join(__dirname, '/wscript/iTunesControl.js');
             var iTunesFetcherScpt  = path.join(__dirname, '/wscript/iTunesFetcher.js');
-
-        }
         switch(type){
             case "fetch": {
                 if(isJson) {
