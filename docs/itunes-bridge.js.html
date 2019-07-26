@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Events</li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:paused">paused</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:playing">playing</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:stopped">stopped</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html"></a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getCurrentTrack">getCurrentTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPlayerState">getPlayerState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPlaylistCount">getPlaylistCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrack">getTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrackCount">getTrackCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#isRunning">isRunning</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#pause">pause</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#play">play</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Events</li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:paused">paused</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:playing">playing</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:stopped">stopped</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html"></a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getCurrentTrack">getCurrentTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPlayerState">getPlayerState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPlaylistCount">getPlaylistCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrack">getTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrackCount">getTrackCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#isRunning">isRunning</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#pause">pause</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#play">play</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#soundVolume">soundVolume</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#stop">stop</a></span></li>
 </nav>
 
 <div id="main">
@@ -42,13 +42,13 @@
             <pre class="prettyprint source linenums"><code>/**
  * This JavaScript file contains the magic.
  *
- * @projectname  iTunes-bridge
- * @version 0.6.1-beta
+ * iTunes-bridge
  * @author AngryKiller
  * @copyright 2018
  * @license GPL-3.0
  *
  */
+
 var exports = module.exports = {};
 var fs = require('fs');
 var {execSync} = require('child_process');
@@ -56,8 +56,14 @@ var events = require('events');
 var event = new events.EventEmitter();
 var plist = require('plist');
 var path = require('path');
-var electron = require('electron-util/node');
+var os = require('os');
 
+
+if(process.platform === "darwin"){
+    var libPath = path.resolve(os.homedir() + "/Music/iTunes/iTunes Library.xml");
+}else if(process.platform === "win32"){
+    var libPath = path.resolve(os.homedir() + "/My Music/iTunes/iTunes Library.xml");
+}
 
 var that = this;
 
@@ -78,7 +84,7 @@ var that = this;
 exports.getCurrentTrack = function () {
     if (exports.isRunning()) {
         try {
-            return runScript('getCurrentTrack', 'fetch', true);
+            return runScript('getCurrentTrack', 'fetch', undefined, true);
         } catch (e) {
             console.log(e);
         }
@@ -94,12 +100,36 @@ exports.getCurrentTrack = function () {
 exports.getPlayerState = function() {
     if (exports.isRunning()) {
         try {
-            return runScript('getPlayerState', 'fetch', false);
+            return runScript('getPlayerState', 'fetch', undefined, false);
         } catch (e) {
             console.log(e);
         }
     } else {
         return "stopped";
+    }
+};
+/**
+ * Gets the iTunes sound volume or sets it if there's a parameter (Windows only)
+ * @param volume {int} - Windows only
+ * @returns {int}
+ */
+exports.soundVolume = function(volume) {
+    if (exports.isRunning()) {
+        if(volume !== undefined &amp;&amp; !isNaN(volume) &amp;&amp; process.platform === "win32"){
+            try{
+                return runScript('setSoundVolume', 'control', volume);
+            }catch(e){
+                console.log(e);
+            }
+        }else{
+            try {
+                return runScript('getSoundVolume', 'fetch', undefined, false);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    }else{
+        console.log("iTunes is not running");
     }
 };
 /**
@@ -115,9 +145,14 @@ exports.pause = function (){
     runScript('pause', 'control');
 };
 /**
+ * Tells iTunes to stop
+ */
+exports.stop = function (){
+    runScript('stop', 'control');
+};
+/**
  * Gets informations about a track from the library
  * @param {int} id - The id of the track
- * @param {string} libPath - The path of the iTunes library
  * @returns {object}
  * @example  { 'Track ID': 1428,
      Size: 9019045,
@@ -149,7 +184,7 @@ exports.pause = function (){
      'Sort Album': 'chant des sirènes',
      Location: 'file:///Users/steve/Music/iTunes/iTunes%20Media/Music/Orelsan/Le%20chant%20des%20sire%CC%80nes/14%20Ils%20sont%20cools.mp3' }
  */
-exports.getTrack = function(id, libPath) {
+exports.getTrack = function(id) {
     try {
         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
         return obj.Tracks[id];
@@ -159,11 +194,9 @@ exports.getTrack = function(id, libPath) {
 };
 /**
  * Gets the playlist count from the library
- *
- * @param {string} libPath - The path of the iTunes library
  * @returns {int}
  */
-exports.getPlaylistCount = function (libPath) {
+exports.getPlaylistCount = function () {
     try {
         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
         return Object.keys(obj.Playlists).length;
@@ -174,17 +207,19 @@ exports.getPlaylistCount = function (libPath) {
 // TODO: Support for arguments in the track count (album, artist, playlist...)
 /**
  * Gets the track count from the library
- * @param {string} libPath
  * @returns {int}
  */
-exports.getTrackCount = function (libPath) {
+exports.getTrackCount = function () {
     try {
         var obj = plist.parse(fs.readFileSync(libPath, 'utf8'));
-        return Object.keys(obj.Tracks).length;
+        return (Object.keys(obj.Tracks).length + 1);
     } catch (err) {
         return null;
     }
 };
+
+
+
 
 // Starting the event system (track change and player state change)
 that.currentTrack = null;
@@ -268,7 +303,7 @@ exports.isRunning = function() {
         }
     }else if(process.platform === "win32"){
         try {
-            execSync('CALL isAppRunning.bat');
+            execSync('tasklist | find "iTunes.exe"');
             return true;
         }
         catch (err) {
@@ -277,16 +312,12 @@ exports.isRunning = function() {
     }
 };
 
-function runScript(req, type, isJson) {
-    if (process.platform === "darwin") {
-        if(electron.isElectron){
-            var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesControl.js'));
-            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/jxa/iTunesFetcher.js'));
-        }else{
+
+function runScript(req, type, args, isJson) {
+
+    if (process.platform === "darwin"){
             var iTunesCtrlScpt  = path.join(__dirname, '/jxa/iTunesControl.js');
             var iTunesFetcherScpt  = path.join(__dirname, '/jxa/iTunesFetcher.js');
-
-        }
         switch(type){
             case "fetch": {
                 if(isJson) {
@@ -298,7 +329,7 @@ function runScript(req, type, isJson) {
             }
             case "control": {
                 try {
-                    execSync('osascript '+iTunesCtrlScpt+' ' + req);
+                    execSync('osascript '+iTunesCtrlScpt+' ' + req+' '+args);
                 }catch(e){
                     console.error(e);
                 }
@@ -306,26 +337,20 @@ function runScript(req, type, isJson) {
             }
         }
     } else if (process.platform === "win32") {
-        if(electron.isElectron){
-            var iTunesCtrlScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesControl.js'));
-            var iTunesFetcherScpt  = electron.fixPathForAsarUnpack(path.join(__dirname, '/wscript/iTunesFetcher.js'));
-        }else{
             var iTunesCtrlScpt  = path.join(__dirname, '/wscript/iTunesControl.js');
             var iTunesFetcherScpt  = path.join(__dirname, '/wscript/iTunesFetcher.js');
-
-        }
         switch(type){
             case "fetch": {
                 if(isJson) {
-                    return JSON.parse(execSync('cscript //Nologo ' + iTunesFetcherScpt + ' ' + req));
+                    return JSON.parse(execSync('cscript //Nologo ' + iTunesFetcherScpt + ' ' + req, { encoding: 'utf8'}));
                 }else{
-                    return execSync('cscript //Nologo ' + iTunesFetcherScpt+' ' + req);
+                    return execSync('cscript //Nologo ' + iTunesFetcherScpt+' ' + req, { encoding: 'utf8'});
                 }
                 break;
             }
             case "control": {
                 try {
-                    execSync('cscript //Nologo '+ iTunesCtrlScpt+' ' + req);
+                    execSync('cscript //Nologo '+ iTunesCtrlScpt+' ' + req+' '+args);
                 }catch(e){
                     console.error(e);
                 }
@@ -336,6 +361,25 @@ function runScript(req, type, isJson) {
 
 }
 
+// Sends an event on module load
+
+// If you're wondering why there's a timeout, that's because if you use this in another module, you will require this file AND THEN load the eventemitter, so if these events are emitted immediately, you will never receive them :')
+setTimeout(function(){
+    switch(exports.getCurrentTrack().playerState){
+        case "playing":{
+            event.emit('playing', 'new_track', exports.getCurrentTrack());
+            break;
+        }
+        case "paused":{
+            event.emit('paused', 'new_track', exports.getCurrentTrack());
+            break;
+        }
+        case "stopped":{
+            event.emit('stopped');
+            break;
+        }
+    }
+}, 500);
 </code></pre>
         </article>
     </section>
@@ -348,7 +392,7 @@ function runScript(req, type, isJson) {
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 08 2018 22:00:07 GMT+0200 (CEST) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jul 27 2019 01:48:17 GMT+0200 (GMT+02:00) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
