@@ -48,3 +48,29 @@ exports.play = function(callback){
         }
     })
 };
+
+exports.pause = function(callback){
+    osa(function(){
+        var iTunes = Application('iTunes');
+        iTunes.pause();
+    }, function(err){
+        if(err){
+            callback(err);
+        }else{
+            callback(null);
+        }
+    })
+};
+
+exports.stop = function(callback){
+    osa(function(){
+        var iTunes = Application('iTunes');
+        iTunes.stop();
+    }, function(err){
+        if(err){
+            callback(err);
+        }else{
+            callback(null);
+        }
+    })
+};

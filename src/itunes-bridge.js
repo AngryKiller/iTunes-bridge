@@ -71,7 +71,6 @@ exports.currentTrack = function(callback){
     })
 };
 
-
 /** Callback for play method
  * @callback playCallback
  * @param {Error} err - The error log is there is any
@@ -92,4 +91,48 @@ exports.play = function(callback){
           // TODO: send an event
       }
   })
+};
+
+/** Callback for play method
+ * @callback pauseCallback
+ * @param {Error} err - The error log is there is any
+ */
+/** Pauses the current track
+ *
+ * @param {pauseCallback} callback called when done
+ */
+exports.pause = function(callback){
+    lib.pause(function(err){
+        if(callback) {
+            if(err){
+                callback(err);
+            }else{
+                callback(null);
+            }
+        }else{
+            // TODO: send an event
+        }
+    })
+};
+
+/** Callback for play method
+ * @callback stopCallback
+ * @param {Error} err - The error log is there is any
+ */
+/** Stops the current track
+ *
+ * @param {stopCallback} callback called when done
+ */
+exports.stop = function(callback){
+    lib.stop(function(err){
+        if(callback) {
+            if(err){
+                callback(err);
+            }else{
+                callback(null);
+            }
+        }else{
+            // TODO: send an event
+        }
+    })
 };
