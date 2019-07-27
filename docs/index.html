@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Events</li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:paused">paused</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:playing">playing</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="iTunes-bridge.html#event:stopped">stopped</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html"></a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getCurrentTrack">getCurrentTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPlayerState">getPlayerState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getPlaylistCount">getPlaylistCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrack">getTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTrackCount">getTrackCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#isRunning">isRunning</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#pause">pause</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#play">play</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#soundVolume">soundVolume</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#stop">stop</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#currentTrack">currentTrack</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#lib">lib</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#play">play</a></span></li>
 </nav>
 
 <div id="main">
@@ -48,9 +48,14 @@
 
 
     <section class="readme">
-        <article><h1>iTunes-bridge</h1><p>A macOS and Windows NodeJS package to control and get informations from iTunes through AppleScript</p>
-<h5>If you need OS X Mavericks and earlier support, use the 0.3.0-alpha, but you will have no Windows support and events in this version.</h5><h3>This package is a WIP, a lot of functions will be added in the future and some that are already existing could change</h3><h1>Documentation</h1><p>You can found it at <a href="https://itunes-bridge.js.org">itunes-bridge.js.org</a></p>
-<h1>Example</h1><pre class="prettyprint source lang-js"><code>var iTunes = require('./itunes-bridge');
+        <article><h1>iTunes-bridge</h1>
+<p>A macOS and Windows NodeJS package to control and get informations from iTunes through AppleScript</p>
+<h5>If you need OS X Mavericks and earlier support, use the 0.3.0-alpha, but you will have no Windows support and events in this version.</h5>
+<h3>This package is a WIP, a lot of functions will be added in the future and some that are already existing could change</h3>
+<h1>Documentation</h1>
+<p>You can found it at <a href="https://itunes-bridge.js.org">itunes-bridge.js.org</a></p>
+<h1>Example</h1>
+<pre class="prettyprint source lang-js"><code>var iTunes = require('./itunes-bridge');
 var currentTrack = iTunes.getCurrentTrack();
 // We load the iTunes-bridge emitter to receive events
 var iTunesEmitter = iTunes.emitter;
@@ -95,11 +100,15 @@ iTunesEmitter.on('stopped', function(){
     console.log(&quot;iTunes is not longer playing!&quot;);
 });
 
-</code></pre><h1>Using with Electron</h1><p>If you want to use iTunes-bridge with Electron and the ASAR compression system, you need to use electron-builder and add the following to your package.json:</p>
+
+</code></pre>
+<h1>Using with Electron</h1>
+<p>If you want to use iTunes-bridge with Electron and the ASAR compression system, you need to use electron-builder and add the following to your package.json:</p>
 <pre class="prettyprint source lang-json"><code>    &quot;asarUnpack&quot;: [
       &quot;node_modules/itunes-bridge/wscript&quot;,
       &quot;node_modules/itunes-bridge/jxa&quot;
-    ]</code></pre></article>
+    ]
+</code></pre></article>
     </section>
 
 
@@ -112,7 +121,7 @@ iTunesEmitter.on('stopped', function(){
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jul 27 2019 01:48:17 GMT+0200 (GMT+02:00) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sat Jul 27 2019 21:26:48 GMT+0200 (Central European Summer Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

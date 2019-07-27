@@ -2,38 +2,45 @@
  * An example file to learn how iTunes-bridge works
  *
  * @projectname  iTunes-bridge
- * @version 0.5.0-beta
+ * @version 0.7.0-alpha
  * @author AngryKiller
- * @copyright 2018
- * @license GPL-3.0
+ * @copyright 2019
+ * @license Apache-2.0
  *
  */
 
-var iTunes = require('./itunes-bridge');
-var currentTrack = iTunes.getCurrentTrack();
+var iTunes = require('./src/itunes-bridge');
+
 // We load the iTunes-bridge emitter to receive events
-var iTunesEmitter = iTunes.emitter;
+//var iTunesEmitter = iTunes.emitter;
 
-switch(currentTrack.playerState) {
-    case "playing": {
-        var exampleMsg = "iTunes is currently playing " + currentTrack.name + " by " + currentTrack.artist + ' from the album "' + currentTrack.album + '". This song is ' + currentTrack.duration + 's long and will finish in ' + currentTrack.remainingTime + 's';
-        var exampleMsg2 = "You have " + iTunes.getPlaylistCount() + " playlists in your library and " + iTunes.getTrackCount() + " tracks!";
-        console.log(exampleMsg);
-        console.log(exampleMsg2);
-        break;
+iTunes.currentTrack(function(err, currentTrack){
+    if(err){
+        throw new Error(err);
+    }else {
+        switch (currentTrack.playerState) {
+            case "playing": {
+                var exampleMsg = "iTunes is currently playing " + currentTrack.name + " by " + currentTrack.artist + ' from the album "' + currentTrack.album + '". This song is ' + currentTrack.duration + 's long and will finish in ' + currentTrack.remainingTime + 's';
+                //var exampleMsg2 = "You have " + iTunes.getPlaylistCount() + " playlists in your library and " + iTunes.getTrackCount() + " tracks!";
+                console.log(exampleMsg);
+                //console.log(exampleMsg2);
+                break;
+            }
+            case "paused": {
+                var exampleMsg = 'iTunes is currently paused';
+                console.log(exampleMsg);
+                break;
+            }
+            case "stopped": {
+                var exampleMsg = "iTunes is not playing at the moment.";
+                console.log(exampleMsg);
+                break;
+            }
+        }
     }
-    case "paused": {
-        var exampleMsg = 'iTunes is currently paused';
-        console.log(exampleMsg);
-        break;
-    }
-    case "stopped": {
-        var exampleMsg = "iTunes is not playing at the moment.";
-        console.log(exampleMsg);
-        break;
-    }
-}
+});
 
+/*
 // Do something when iTunes is playing
 iTunesEmitter.on('playing', function(type, currentTrack){
     // If it is a paused track that restarts playing
@@ -53,3 +60,4 @@ iTunesEmitter.on('paused', function(type, currentTrack){
 iTunesEmitter.on('stopped', function(){
     console.log("iTunes is not longer playing!");
 });
+ */

@@ -4,7 +4,7 @@
     "dictionaries": ["jsdoc"]
   },
   "source": {
-    "include": ["README.md", "itunes-bridge.js"],
+    "include": ["README.md", "src/itunes-bridge.js"],
     "includePattern": ".js$",
     "excludePattern": "(node_modules/|docs)"
   },
