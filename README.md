@@ -5,7 +5,7 @@ A macOS and Windows NodeJS package to control and get informations from iTunes t
 
 ### This package is a WIP, a lot of functions will be added in the future and some that are already existing could change
 # Documentation
-You can found it at [itunes-bridge.js.org](https://itunes-bridge.js.org)
+You can find it at [itunes-bridge.js.org](https://itunes-bridge.js.org)
 
 # Example
 ```js
