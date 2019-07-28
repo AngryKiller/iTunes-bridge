@@ -1,12 +1,9 @@
-/**
- * This JavaScript file contains the magic, once again...
- *
- * iTunes-bridge
+/** This JavaScript file contains the magic, once again...
+ * @name iTunes-bridge
  * @author AngryKiller
  * @version 0.7.0-alpha
  * @copyright 2019
  * @license Apache-2.0
- *
  */
 
 
@@ -93,7 +90,7 @@ exports.play = function(callback){
   })
 };
 
-/** Callback for play method
+/** Callback for pause method
  * @callback pauseCallback
  * @param {Error} err - The error log is there is any
  */
@@ -115,7 +112,7 @@ exports.pause = function(callback){
     })
 };
 
-/** Callback for play method
+/** Callback for stop method
  * @callback stopCallback
  * @param {Error} err - The error log is there is any
  */
@@ -125,6 +122,50 @@ exports.pause = function(callback){
  */
 exports.stop = function(callback){
     lib.stop(function(err){
+        if(callback) {
+            if(err){
+                callback(err);
+            }else{
+                callback(null);
+            }
+        }else{
+            // TODO: send an event
+        }
+    })
+};
+
+/** Callback for next method
+ * @callback nextCallback
+ * @param {Error} err - The error log is there is any
+ */
+/** Skips to the next track
+ *
+ * @param {nextCallback} callback called when done
+ */
+exports.next = function(callback){
+    lib.next(function(err){
+        if(callback) {
+            if(err){
+                callback(err);
+            }else{
+                callback(null);
+            }
+        }else{
+            // TODO: send an event
+        }
+    })
+};
+
+/** Callback for back method
+ * @callback backCallback
+ * @param {Error} err - The error log is there is any
+ */
+/** Goes back to the previous track
+ *
+ * @param {backCallback} callback called when done
+ */
+exports.previous = function(callback){
+    lib.previous(function(err){
         if(callback) {
             if(err){
                 callback(err);

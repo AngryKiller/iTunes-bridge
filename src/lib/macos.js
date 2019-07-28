@@ -74,3 +74,29 @@ exports.stop = function(callback){
         }
     })
 };
+
+exports.next = function(callback) {
+    osa(function () {
+        var iTunes = Application('iTunes');
+        iTunes.nextTrack();
+    }, function (err) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null);
+        }
+    })
+};
+
+exports.previous = function(callback) {
+    osa(function () {
+        var iTunes = Application('iTunes');
+        iTunes.previousTrack();
+    }, function (err) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null);
+        }
+    })
+};
