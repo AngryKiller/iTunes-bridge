@@ -1,4 +1,13 @@
-const iTunes = Application('iTunes');
+const a = Application.currentApplication();
+let iTunes;
+a.includeStandardAdditions = true;
+
+const isCatalina = a.doShellScript("mdfind -name 'kMDItemFSName==Music.app' -onlyin /Applications/");
+if(isCatalina){
+    iTunes = Application('Music');
+}else{
+    iTunes = Application('iTunes');
+}
 
 ObjC.import('Foundation');
 const argv = $.NSProcessInfo.processInfo.arguments.js;
