@@ -1,4 +1,9 @@
-const iTunes = Application('iTunes');
+const isCatalina = a.doShellScript("open -Ra iTunes");
+if(!isCatalina){
+    iTunes = Application('Music');
+}else{
+    iTunes = Application('iTunes');
+}
 
 ObjC.import('Foundation');
 const argv = $.NSProcessInfo.processInfo.arguments.js;

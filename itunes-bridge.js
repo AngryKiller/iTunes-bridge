@@ -16,6 +16,7 @@ var event = new events.EventEmitter();
 var plist = require('plist');
 var path = require('path');
 var os = require('os');
+var compver = require('compare-versions');
 
 
 if(process.platform === "darwin"){
@@ -254,8 +255,13 @@ exports.emitter = event;
 exports.isRunning = function() {
     if(process.platform === "darwin") {
         try {
-            execSync('pgrep -x "iTunes"');
-            return true;
+            if(compver.compare(os.release(), '19.0.0', '>=')) {
+                execSync('pgrep -x "Music"');
+                return true;
+            }else{
+                execSync(('pgrep -x "iTunes"'));
+                return true;
+            }
         }
         catch (err) {
             return false;

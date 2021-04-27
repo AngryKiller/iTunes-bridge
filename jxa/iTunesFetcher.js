@@ -2,8 +2,8 @@ const a = Application.currentApplication();
 let iTunes;
 a.includeStandardAdditions = true;
 
-const isCatalina = a.doShellScript("mdfind -name 'kMDItemFSName==Music.app' -onlyin /Applications/");
-if(isCatalina){
+const isCatalina = a.doShellScript("open -Ra iTunes");
+if(!isCatalina){
     iTunes = Application('Music');
 }else{
     iTunes = Application('iTunes');
