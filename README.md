@@ -1,5 +1,5 @@
 # iTunes-bridge
-A macOS and Windows NodeJS package to control and get informations from iTunes through AppleScript
+A macOS and Windows NodeJS package to control and get informations from iTunes and macOS Music app through AppleScript
 
 ##### If you need OS X Mavericks and earlier support, use the 0.3.0-alpha, but you will have no Windows support and events in this version.
 
