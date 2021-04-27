@@ -2,10 +2,10 @@ const a = Application.currentApplication();
 let iTunes;
 a.includeStandardAdditions = true;
 
-const isCatalina = a.doShellScript("open -Ra iTunes");
-if(!isCatalina){
+try{
+    a.doShellScript("open -Ra Music");
     iTunes = Application('Music');
-}else{
+}catch{
     iTunes = Application('iTunes');
 }
 
