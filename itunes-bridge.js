@@ -281,8 +281,8 @@ exports.isRunning = function() {
 function runScript(req, type, args, isJson) {
 
     if (process.platform === "darwin"){
-            var iTunesCtrlScpt  = path.join(__dirname, '/jxa/iTunesControl.js');
-            var iTunesFetcherScpt  = path.join(__dirname, '/jxa/iTunesFetcher.js');
+            var iTunesCtrlScpt  = path.join(__dirname, '/jxa/iTunesControl.js').replace('app.asar', 'app.asar.unpacked');
+            var iTunesFetcherScpt  = path.join(__dirname, '/jxa/iTunesFetcher.js').replace('app.asar', 'app.asar.unpacked');
         switch(type){
             case "fetch": {
                 if(isJson) {
@@ -302,8 +302,8 @@ function runScript(req, type, args, isJson) {
             }
         }
     } else if (process.platform === "win32") {
-            var iTunesCtrlScpt  = path.join(__dirname, '/wscript/iTunesControl.js');
-            var iTunesFetcherScpt  = path.join(__dirname, '/wscript/iTunesFetcher.js');
+            var iTunesCtrlScpt  = path.join(__dirname, '/wscript/iTunesControl.js').replace('app.asar', 'app.asar.unpacked');
+            var iTunesFetcherScpt  = path.join(__dirname, '/wscript/iTunesFetcher.js').replace('app.asar', 'app.asar.unpacked');
         switch(type){
             case "fetch": {
                 if(isJson) {
