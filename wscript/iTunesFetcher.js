@@ -30,22 +30,22 @@ function getCurrentTrack(){
             }
         }
         json = {
-            "name": encodeURIComponent(currentTrack.name),
-            "artist": encodeURIComponent(currentTrack.artist),
-            "album": encodeURIComponent(currentTrack.album),
+            "name": currentTrack.name,
+            "artist": currentTrack.artist,
+            "album": currentTrack.album,
             "mediaKind": currentTrack.kind,
             "duration": currentTrack.duration,
             "elapsedTime": iTunesApp.PlayerPosition,
             "remainingTime": remainingTime,
-            "genre": encodeURIComponent(currentTrack.genre),
+            "genre": currentTrack.genre,
             "releaseYear": currentTrack.year,
-            "id": encodeURIComponent(currentTrack.name), // I haven't found a way to get the current track ID with iTunes COM :/
+            "id": currentTrack.name, // I haven't found a way to get the current track ID with iTunes COM :/
             "playerState": playerState
         };
     } catch (e) {
         json = {"playerState": "stopped"};
     }
-    return JSON.stringify(json);
+    return encodeURI(JSON.stringify(json));
 }
 
 switch(WScript.arguments(0)){
