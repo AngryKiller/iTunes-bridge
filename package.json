@@ -31,7 +31,7 @@
   "dependencies": {
     "@johnpaulvaughan/itunes-music-library-path": "^2.0.2",
     "compare-versions": "^3.6.0",
-    "plist": "^2.1.0"
+    "plist": "^3.0.4"
   },
   "devDependencies": {
     "jsdoc": "^3.6.6",
